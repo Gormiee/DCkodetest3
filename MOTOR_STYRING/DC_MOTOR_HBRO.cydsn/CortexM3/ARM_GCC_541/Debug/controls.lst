@@ -1,0 +1,1376 @@
+ARM GAS  C:\Users\malle\AppData\Local\Temp\ccbgbdle.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"controls.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.decreaseSpeed,"ax",%progbits
+  20              		.align	2
+  21              		.global	decreaseSpeed
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	decreaseSpeed, %function
+  25              	decreaseSpeed:
+  26              	.LFB64:
+  27              		.file 1 "controls.c"
+   1:controls.c    **** /* ========================================
+   2:controls.c    ****  *
+   3:controls.c    ****  * Copyright YOUR COMPANY, THE YEAR
+   4:controls.c    ****  * All Rights Reserved
+   5:controls.c    ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:controls.c    ****  *
+   7:controls.c    ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:controls.c    ****  * WHICH IS THE PROPERTY OF your company.
+   9:controls.c    ****  *
+  10:controls.c    ****  * ========================================
+  11:controls.c    **** */
+  12:controls.c    **** 
+  13:controls.c    **** #include "project.h"
+  14:controls.c    **** #include "controls.h"
+  15:controls.c    **** #include <stdio.h>
+  16:controls.c    **** 
+  17:controls.c    **** /*
+  18:controls.c    ****  Decrease speed by 10%. Stops at 0%
+  19:controls.c    **** */
+  20:controls.c    **** void decreaseSpeed()
+  21:controls.c    **** {
+  28              		.loc 1 21 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 256
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 10B5     		push	{r4, lr}
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 4, -8
+  35              		.cfi_offset 14, -4
+  36 0002 C0B0     		sub	sp, sp, #256
+ARM GAS  C:\Users\malle\AppData\Local\Temp\ccbgbdle.s 			page 2
+
+
+  37              		.cfi_def_cfa_offset 264
+  22:controls.c    ****     uint8 curr = PWM_1_ReadCompare();
+  38              		.loc 1 22 0
+  39 0004 FFF7FEFF 		bl	PWM_1_ReadCompare
+  40              	.LVL0:
+  23:controls.c    ****     
+  24:controls.c    ****     if (curr > 0)
+  41              		.loc 1 24 0
+  42 0008 78B1     		cbz	r0, .L2
+  43              	.LBB2:
+  25:controls.c    ****     {
+  26:controls.c    ****         char buffer[256];
+  27:controls.c    ****         snprintf(buffer, sizeof(buffer),
+  44              		.loc 1 27 0
+  45 000a A0F10A04 		sub	r4, r0, #10
+  46 000e 2346     		mov	r3, r4
+  47 0010 084A     		ldr	r2, .L5
+  48 0012 4FF48071 		mov	r1, #256
+  49 0016 6846     		mov	r0, sp
+  50              	.LVL1:
+  51 0018 FFF7FEFF 		bl	snprintf
+  52              	.LVL2:
+  28:controls.c    ****             "Decreasing speed to %d\n\r", curr - 10);
+  29:controls.c    ****         UART_1_PutString(buffer);
+  53              		.loc 1 29 0
+  54 001c 6846     		mov	r0, sp
+  55 001e FFF7FEFF 		bl	UART_1_PutString
+  56              	.LVL3:
+  30:controls.c    ****         PWM_1_WriteCompare(curr - 10);
+  57              		.loc 1 30 0
+  58 0022 E0B2     		uxtb	r0, r4
+  59 0024 FFF7FEFF 		bl	PWM_1_WriteCompare
+  60              	.LVL4:
+  61              	.LBE2:
+  62 0028 02E0     		b	.L1
+  63              	.LVL5:
+  64              	.L2:
+  31:controls.c    ****     }
+  32:controls.c    ****     else
+  33:controls.c    ****     {
+  34:controls.c    ****         UART_1_PutString("Minimum speed reached\n\r");
+  65              		.loc 1 34 0
+  66 002a 0348     		ldr	r0, .L5+4
+  67              	.LVL6:
+  68 002c FFF7FEFF 		bl	UART_1_PutString
+  69              	.LVL7:
+  70              	.L1:
+  35:controls.c    ****     }
+  36:controls.c    **** }
+  71              		.loc 1 36 0
+  72 0030 40B0     		add	sp, sp, #256
+  73              		.cfi_def_cfa_offset 8
+  74              		@ sp needed
+  75 0032 10BD     		pop	{r4, pc}
+  76              	.L6:
+  77              		.align	2
+  78              	.L5:
+ARM GAS  C:\Users\malle\AppData\Local\Temp\ccbgbdle.s 			page 3
+
+
+  79 0034 00000000 		.word	.LC0
+  80 0038 1C000000 		.word	.LC1
+  81              		.cfi_endproc
+  82              	.LFE64:
+  83              		.size	decreaseSpeed, .-decreaseSpeed
+  84              		.section	.text.increaseSpeed,"ax",%progbits
+  85              		.align	2
+  86              		.global	increaseSpeed
+  87              		.thumb
+  88              		.thumb_func
+  89              		.type	increaseSpeed, %function
+  90              	increaseSpeed:
+  91              	.LFB65:
+  37:controls.c    **** /*
+  38:controls.c    ****     Increase speed by 10%. Stops at 100%
+  39:controls.c    **** */
+  40:controls.c    **** void increaseSpeed()
+  41:controls.c    **** {
+  92              		.loc 1 41 0
+  93              		.cfi_startproc
+  94              		@ args = 0, pretend = 0, frame = 256
+  95              		@ frame_needed = 0, uses_anonymous_args = 0
+  96 0000 10B5     		push	{r4, lr}
+  97              		.cfi_def_cfa_offset 8
+  98              		.cfi_offset 4, -8
+  99              		.cfi_offset 14, -4
+ 100 0002 C0B0     		sub	sp, sp, #256
+ 101              		.cfi_def_cfa_offset 264
+  42:controls.c    ****     uint8 curr = PWM_1_ReadCompare();
+ 102              		.loc 1 42 0
+ 103 0004 FFF7FEFF 		bl	PWM_1_ReadCompare
+ 104              	.LVL8:
+  43:controls.c    ****     if (curr < 100)
+ 105              		.loc 1 43 0
+ 106 0008 6328     		cmp	r0, #99
+ 107 000a 0FD8     		bhi	.L8
+ 108              	.LBB3:
+  44:controls.c    ****     {   
+  45:controls.c    ****         char buffer[256];
+  46:controls.c    ****         snprintf(buffer, sizeof(buffer),
+ 109              		.loc 1 46 0
+ 110 000c 00F10A04 		add	r4, r0, #10
+ 111 0010 2346     		mov	r3, r4
+ 112 0012 094A     		ldr	r2, .L11
+ 113 0014 4FF48071 		mov	r1, #256
+ 114 0018 6846     		mov	r0, sp
+ 115              	.LVL9:
+ 116 001a FFF7FEFF 		bl	snprintf
+ 117              	.LVL10:
+  47:controls.c    ****             "Increasing speed to %d\n\r", curr + 10);
+  48:controls.c    ****         UART_1_PutString(buffer);
+ 118              		.loc 1 48 0
+ 119 001e 6846     		mov	r0, sp
+ 120 0020 FFF7FEFF 		bl	UART_1_PutString
+ 121              	.LVL11:
+  49:controls.c    ****         PWM_1_WriteCompare(curr + 10);
+ 122              		.loc 1 49 0
+ARM GAS  C:\Users\malle\AppData\Local\Temp\ccbgbdle.s 			page 4
+
+
+ 123 0024 E0B2     		uxtb	r0, r4
+ 124 0026 FFF7FEFF 		bl	PWM_1_WriteCompare
+ 125              	.LVL12:
+ 126              	.LBE3:
+ 127 002a 02E0     		b	.L7
+ 128              	.LVL13:
+ 129              	.L8:
+  50:controls.c    ****         
+  51:controls.c    ****     }
+  52:controls.c    ****     else
+  53:controls.c    ****     {
+  54:controls.c    ****         UART_1_PutString("Maximum speed reached\n\r");
+ 130              		.loc 1 54 0
+ 131 002c 0348     		ldr	r0, .L11+4
+ 132              	.LVL14:
+ 133 002e FFF7FEFF 		bl	UART_1_PutString
+ 134              	.LVL15:
+ 135              	.L7:
+  55:controls.c    ****     }
+  56:controls.c    **** }
+ 136              		.loc 1 56 0
+ 137 0032 40B0     		add	sp, sp, #256
+ 138              		.cfi_def_cfa_offset 8
+ 139              		@ sp needed
+ 140 0034 10BD     		pop	{r4, pc}
+ 141              	.L12:
+ 142 0036 00BF     		.align	2
+ 143              	.L11:
+ 144 0038 34000000 		.word	.LC2
+ 145 003c 50000000 		.word	.LC3
+ 146              		.cfi_endproc
+ 147              	.LFE65:
+ 148              		.size	increaseSpeed, .-increaseSpeed
+ 149              		.section	.text.driveForwards,"ax",%progbits
+ 150              		.align	2
+ 151              		.global	driveForwards
+ 152              		.thumb
+ 153              		.thumb_func
+ 154              		.type	driveForwards, %function
+ 155              	driveForwards:
+ 156              	.LFB66:
+  57:controls.c    **** void driveForwards()
+  58:controls.c    **** {
+ 157              		.loc 1 58 0
+ 158              		.cfi_startproc
+ 159              		@ args = 0, pretend = 0, frame = 0
+ 160              		@ frame_needed = 0, uses_anonymous_args = 0
+ 161 0000 08B5     		push	{r3, lr}
+ 162              		.cfi_def_cfa_offset 8
+ 163              		.cfi_offset 3, -8
+ 164              		.cfi_offset 14, -4
+  59:controls.c    ****     Pin_IN1_Write(1);
+ 165              		.loc 1 59 0
+ 166 0002 0120     		movs	r0, #1
+ 167 0004 FFF7FEFF 		bl	Pin_IN1_Write
+ 168              	.LVL16:
+  60:controls.c    ****     Pin_IN2_Write(0);
+ARM GAS  C:\Users\malle\AppData\Local\Temp\ccbgbdle.s 			page 5
+
+
+ 169              		.loc 1 60 0
+ 170 0008 0020     		movs	r0, #0
+ 171 000a FFF7FEFF 		bl	Pin_IN2_Write
+ 172              	.LVL17:
+  61:controls.c    ****     UART_1_PutString("Set direction: forwards\r\n");
+ 173              		.loc 1 61 0
+ 174 000e 0248     		ldr	r0, .L15
+ 175 0010 FFF7FEFF 		bl	UART_1_PutString
+ 176              	.LVL18:
+ 177 0014 08BD     		pop	{r3, pc}
+ 178              	.L16:
+ 179 0016 00BF     		.align	2
+ 180              	.L15:
+ 181 0018 68000000 		.word	.LC4
+ 182              		.cfi_endproc
+ 183              	.LFE66:
+ 184              		.size	driveForwards, .-driveForwards
+ 185              		.section	.text.driveBackwards,"ax",%progbits
+ 186              		.align	2
+ 187              		.global	driveBackwards
+ 188              		.thumb
+ 189              		.thumb_func
+ 190              		.type	driveBackwards, %function
+ 191              	driveBackwards:
+ 192              	.LFB67:
+  62:controls.c    **** }
+  63:controls.c    **** 
+  64:controls.c    **** void driveBackwards()
+  65:controls.c    **** {
+ 193              		.loc 1 65 0
+ 194              		.cfi_startproc
+ 195              		@ args = 0, pretend = 0, frame = 0
+ 196              		@ frame_needed = 0, uses_anonymous_args = 0
+ 197 0000 08B5     		push	{r3, lr}
+ 198              		.cfi_def_cfa_offset 8
+ 199              		.cfi_offset 3, -8
+ 200              		.cfi_offset 14, -4
+  66:controls.c    ****     Pin_IN2_Write(1);
+ 201              		.loc 1 66 0
+ 202 0002 0120     		movs	r0, #1
+ 203 0004 FFF7FEFF 		bl	Pin_IN2_Write
+ 204              	.LVL19:
+  67:controls.c    ****     Pin_IN1_Write(0);
+ 205              		.loc 1 67 0
+ 206 0008 0020     		movs	r0, #0
+ 207 000a FFF7FEFF 		bl	Pin_IN1_Write
+ 208              	.LVL20:
+  68:controls.c    ****     UART_1_PutString("Set direction: backwards\r\n");
+ 209              		.loc 1 68 0
+ 210 000e 0248     		ldr	r0, .L19
+ 211 0010 FFF7FEFF 		bl	UART_1_PutString
+ 212              	.LVL21:
+ 213 0014 08BD     		pop	{r3, pc}
+ 214              	.L20:
+ 215 0016 00BF     		.align	2
+ 216              	.L19:
+ 217 0018 84000000 		.word	.LC5
+ARM GAS  C:\Users\malle\AppData\Local\Temp\ccbgbdle.s 			page 6
+
+
+ 218              		.cfi_endproc
+ 219              	.LFE67:
+ 220              		.size	driveBackwards, .-driveBackwards
+ 221              		.section	.text.stop,"ax",%progbits
+ 222              		.align	2
+ 223              		.global	stop
+ 224              		.thumb
+ 225              		.thumb_func
+ 226              		.type	stop, %function
+ 227              	stop:
+ 228              	.LFB68:
+  69:controls.c    **** }
+  70:controls.c    **** 
+  71:controls.c    **** /*
+  72:controls.c    ****     Stops motor. Sets speed to 0%
+  73:controls.c    **** */
+  74:controls.c    **** void stop()
+  75:controls.c    **** {
+ 229              		.loc 1 75 0
+ 230              		.cfi_startproc
+ 231              		@ args = 0, pretend = 0, frame = 0
+ 232              		@ frame_needed = 0, uses_anonymous_args = 0
+ 233 0000 08B5     		push	{r3, lr}
+ 234              		.cfi_def_cfa_offset 8
+ 235              		.cfi_offset 3, -8
+ 236              		.cfi_offset 14, -4
+  76:controls.c    ****     UART_1_PutString("Stop\r\n");
+ 237              		.loc 1 76 0
+ 238 0002 0648     		ldr	r0, .L23
+ 239 0004 FFF7FEFF 		bl	UART_1_PutString
+ 240              	.LVL22:
+  77:controls.c    ****     Pin_IN1_Write(0);
+ 241              		.loc 1 77 0
+ 242 0008 0020     		movs	r0, #0
+ 243 000a FFF7FEFF 		bl	Pin_IN1_Write
+ 244              	.LVL23:
+  78:controls.c    ****     Pin_IN2_Write(0);
+ 245              		.loc 1 78 0
+ 246 000e 0020     		movs	r0, #0
+ 247 0010 FFF7FEFF 		bl	Pin_IN2_Write
+ 248              	.LVL24:
+  79:controls.c    ****     PWM_1_WriteCompare(100);
+ 249              		.loc 1 79 0
+ 250 0014 6420     		movs	r0, #100
+ 251 0016 FFF7FEFF 		bl	PWM_1_WriteCompare
+ 252              	.LVL25:
+ 253 001a 08BD     		pop	{r3, pc}
+ 254              	.L24:
+ 255              		.align	2
+ 256              	.L23:
+ 257 001c A0000000 		.word	.LC6
+ 258              		.cfi_endproc
+ 259              	.LFE68:
+ 260              		.size	stop, .-stop
+ 261              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 262              		.align	2
+ 263              	.LC0:
+ARM GAS  C:\Users\malle\AppData\Local\Temp\ccbgbdle.s 			page 7
+
+
+ 264 0000 44656372 		.ascii	"Decreasing speed to %d\012\015\000"
+ 264      65617369 
+ 264      6E672073 
+ 264      70656564 
+ 264      20746F20 
+ 265 0019 000000   		.space	3
+ 266              	.LC1:
+ 267 001c 4D696E69 		.ascii	"Minimum speed reached\012\015\000"
+ 267      6D756D20 
+ 267      73706565 
+ 267      64207265 
+ 267      61636865 
+ 268              	.LC2:
+ 269 0034 496E6372 		.ascii	"Increasing speed to %d\012\015\000"
+ 269      65617369 
+ 269      6E672073 
+ 269      70656564 
+ 269      20746F20 
+ 270 004d 000000   		.space	3
+ 271              	.LC3:
+ 272 0050 4D617869 		.ascii	"Maximum speed reached\012\015\000"
+ 272      6D756D20 
+ 272      73706565 
+ 272      64207265 
+ 272      61636865 
+ 273              	.LC4:
+ 274 0068 53657420 		.ascii	"Set direction: forwards\015\012\000"
+ 274      64697265 
+ 274      6374696F 
+ 274      6E3A2066 
+ 274      6F727761 
+ 275 0082 0000     		.space	2
+ 276              	.LC5:
+ 277 0084 53657420 		.ascii	"Set direction: backwards\015\012\000"
+ 277      64697265 
+ 277      6374696F 
+ 277      6E3A2062 
+ 277      61636B77 
+ 278 009f 00       		.space	1
+ 279              	.LC6:
+ 280 00a0 53746F70 		.ascii	"Stop\015\012\000"
+ 280      0D0A00
+ 281              		.text
+ 282              	.Letext0:
+ 283              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 284              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 285              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 286              		.file 5 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 287              		.file 6 "Generated_Source\\PSoC5/UART_1.h"
+ 288              		.file 7 "Generated_Source\\PSoC5/PWM_1.h"
+ 289              		.file 8 "Generated_Source\\PSoC5/Pin_IN1.h"
+ 290              		.file 9 "Generated_Source\\PSoC5/Pin_IN2.h"
+ 291              		.file 10 "Generated_Source\\PSoC5/core_cm3.h"
+ 292              		.section	.debug_info,"",%progbits
+ 293              	.Ldebug_info0:
+ 294 0000 69030000 		.4byte	0x369
+ 295 0004 0400     		.2byte	0x4
+ARM GAS  C:\Users\malle\AppData\Local\Temp\ccbgbdle.s 			page 8
+
+
+ 296 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 297 000a 04       		.byte	0x4
+ 298 000b 01       		.uleb128 0x1
+ 299 000c 81000000 		.4byte	.LASF30
+ 300 0010 0C       		.byte	0xc
+ 301 0011 00000000 		.4byte	.LASF31
+ 302 0015 3F000000 		.4byte	.LASF32
+ 303 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 304 001d 00000000 		.4byte	0
+ 305 0021 00000000 		.4byte	.Ldebug_line0
+ 306 0025 02       		.uleb128 0x2
+ 307 0026 01       		.byte	0x1
+ 308 0027 06       		.byte	0x6
+ 309 0028 1F020000 		.4byte	.LASF0
+ 310 002c 02       		.uleb128 0x2
+ 311 002d 01       		.byte	0x1
+ 312 002e 08       		.byte	0x8
+ 313 002f 73000000 		.4byte	.LASF1
+ 314 0033 02       		.uleb128 0x2
+ 315 0034 02       		.byte	0x2
+ 316 0035 05       		.byte	0x5
+ 317 0036 F3010000 		.4byte	.LASF2
+ 318 003a 02       		.uleb128 0x2
+ 319 003b 02       		.byte	0x2
+ 320 003c 07       		.byte	0x7
+ 321 003d 21010000 		.4byte	.LASF3
+ 322 0041 03       		.uleb128 0x3
+ 323 0042 1E000000 		.4byte	.LASF9
+ 324 0046 02       		.byte	0x2
+ 325 0047 3F       		.byte	0x3f
+ 326 0048 4C000000 		.4byte	0x4c
+ 327 004c 02       		.uleb128 0x2
+ 328 004d 04       		.byte	0x4
+ 329 004e 05       		.byte	0x5
+ 330 004f 0A020000 		.4byte	.LASF4
+ 331 0053 02       		.uleb128 0x2
+ 332 0054 04       		.byte	0x4
+ 333 0055 07       		.byte	0x7
+ 334 0056 0F010000 		.4byte	.LASF5
+ 335 005a 02       		.uleb128 0x2
+ 336 005b 08       		.byte	0x8
+ 337 005c 05       		.byte	0x5
+ 338 005d C9010000 		.4byte	.LASF6
+ 339 0061 02       		.uleb128 0x2
+ 340 0062 08       		.byte	0x8
+ 341 0063 07       		.byte	0x7
+ 342 0064 7A010000 		.4byte	.LASF7
+ 343 0068 04       		.uleb128 0x4
+ 344 0069 04       		.byte	0x4
+ 345 006a 05       		.byte	0x5
+ 346 006b 696E7400 		.ascii	"int\000"
+ 347 006f 02       		.uleb128 0x2
+ 348 0070 04       		.byte	0x4
+ 349 0071 07       		.byte	0x7
+ 350 0072 5F010000 		.4byte	.LASF8
+ 351 0076 03       		.uleb128 0x3
+ 352 0077 9F010000 		.4byte	.LASF10
+ARM GAS  C:\Users\malle\AppData\Local\Temp\ccbgbdle.s 			page 9
+
+
+ 353 007b 03       		.byte	0x3
+ 354 007c 2C       		.byte	0x2c
+ 355 007d 41000000 		.4byte	0x41
+ 356 0081 05       		.uleb128 0x5
+ 357 0082 04020000 		.4byte	.LASF11
+ 358 0086 04       		.byte	0x4
+ 359 0087 E801     		.2byte	0x1e8
+ 360 0089 2C000000 		.4byte	0x2c
+ 361 008d 02       		.uleb128 0x2
+ 362 008e 04       		.byte	0x4
+ 363 008f 04       		.byte	0x4
+ 364 0090 6D000000 		.4byte	.LASF12
+ 365 0094 02       		.uleb128 0x2
+ 366 0095 08       		.byte	0x8
+ 367 0096 04       		.byte	0x4
+ 368 0097 58010000 		.4byte	.LASF13
+ 369 009b 02       		.uleb128 0x2
+ 370 009c 01       		.byte	0x1
+ 371 009d 08       		.byte	0x8
+ 372 009e E0010000 		.4byte	.LASF14
+ 373 00a2 02       		.uleb128 0x2
+ 374 00a3 08       		.byte	0x8
+ 375 00a4 04       		.byte	0x4
+ 376 00a5 13020000 		.4byte	.LASF15
+ 377 00a9 02       		.uleb128 0x2
+ 378 00aa 04       		.byte	0x4
+ 379 00ab 07       		.byte	0x7
+ 380 00ac D7010000 		.4byte	.LASF16
+ 381 00b0 06       		.uleb128 0x6
+ 382 00b1 E5010000 		.4byte	.LASF19
+ 383 00b5 01       		.byte	0x1
+ 384 00b6 14       		.byte	0x14
+ 385 00b7 00000000 		.4byte	.LFB64
+ 386 00bb 3C000000 		.4byte	.LFE64-.LFB64
+ 387 00bf 01       		.uleb128 0x1
+ 388 00c0 9C       		.byte	0x9c
+ 389 00c1 5C010000 		.4byte	0x15c
+ 390 00c5 07       		.uleb128 0x7
+ 391 00c6 19000000 		.4byte	.LASF17
+ 392 00ca 01       		.byte	0x1
+ 393 00cb 16       		.byte	0x16
+ 394 00cc 81000000 		.4byte	0x81
+ 395 00d0 00000000 		.4byte	.LLST0
+ 396 00d4 08       		.uleb128 0x8
+ 397 00d5 0A000000 		.4byte	.LBB2
+ 398 00d9 1E000000 		.4byte	.LBE2-.LBB2
+ 399 00dd 3F010000 		.4byte	0x13f
+ 400 00e1 09       		.uleb128 0x9
+ 401 00e2 FD010000 		.4byte	.LASF18
+ 402 00e6 01       		.byte	0x1
+ 403 00e7 1A       		.byte	0x1a
+ 404 00e8 5C010000 		.4byte	0x15c
+ 405 00ec 03       		.uleb128 0x3
+ 406 00ed 91       		.byte	0x91
+ 407 00ee F87D     		.sleb128 -264
+ 408 00f0 0A       		.uleb128 0xa
+ 409 00f1 1C000000 		.4byte	.LVL2
+ARM GAS  C:\Users\malle\AppData\Local\Temp\ccbgbdle.s 			page 10
+
+
+ 410 00f5 2A030000 		.4byte	0x32a
+ 411 00f9 1A010000 		.4byte	0x11a
+ 412 00fd 0B       		.uleb128 0xb
+ 413 00fe 01       		.uleb128 0x1
+ 414 00ff 50       		.byte	0x50
+ 415 0100 02       		.uleb128 0x2
+ 416 0101 7D       		.byte	0x7d
+ 417 0102 00       		.sleb128 0
+ 418 0103 0B       		.uleb128 0xb
+ 419 0104 01       		.uleb128 0x1
+ 420 0105 51       		.byte	0x51
+ 421 0106 03       		.uleb128 0x3
+ 422 0107 0A       		.byte	0xa
+ 423 0108 0001     		.2byte	0x100
+ 424 010a 0B       		.uleb128 0xb
+ 425 010b 01       		.uleb128 0x1
+ 426 010c 52       		.byte	0x52
+ 427 010d 05       		.uleb128 0x5
+ 428 010e 03       		.byte	0x3
+ 429 010f 00000000 		.4byte	.LC0
+ 430 0113 0B       		.uleb128 0xb
+ 431 0114 01       		.uleb128 0x1
+ 432 0115 53       		.byte	0x53
+ 433 0116 02       		.uleb128 0x2
+ 434 0117 74       		.byte	0x74
+ 435 0118 00       		.sleb128 0
+ 436 0119 00       		.byte	0
+ 437 011a 0A       		.uleb128 0xa
+ 438 011b 22000000 		.4byte	.LVL3
+ 439 011f 35030000 		.4byte	0x335
+ 440 0123 2E010000 		.4byte	0x12e
+ 441 0127 0B       		.uleb128 0xb
+ 442 0128 01       		.uleb128 0x1
+ 443 0129 50       		.byte	0x50
+ 444 012a 02       		.uleb128 0x2
+ 445 012b 7D       		.byte	0x7d
+ 446 012c 00       		.sleb128 0
+ 447 012d 00       		.byte	0
+ 448 012e 0C       		.uleb128 0xc
+ 449 012f 28000000 		.4byte	.LVL4
+ 450 0133 40030000 		.4byte	0x340
+ 451 0137 0B       		.uleb128 0xb
+ 452 0138 01       		.uleb128 0x1
+ 453 0139 50       		.byte	0x50
+ 454 013a 02       		.uleb128 0x2
+ 455 013b 74       		.byte	0x74
+ 456 013c 00       		.sleb128 0
+ 457 013d 00       		.byte	0
+ 458 013e 00       		.byte	0
+ 459 013f 0D       		.uleb128 0xd
+ 460 0140 08000000 		.4byte	.LVL0
+ 461 0144 4B030000 		.4byte	0x34b
+ 462 0148 0C       		.uleb128 0xc
+ 463 0149 30000000 		.4byte	.LVL7
+ 464 014d 35030000 		.4byte	0x335
+ 465 0151 0B       		.uleb128 0xb
+ 466 0152 01       		.uleb128 0x1
+ARM GAS  C:\Users\malle\AppData\Local\Temp\ccbgbdle.s 			page 11
+
+
+ 467 0153 50       		.byte	0x50
+ 468 0154 05       		.uleb128 0x5
+ 469 0155 03       		.byte	0x3
+ 470 0156 1C000000 		.4byte	.LC1
+ 471 015a 00       		.byte	0
+ 472 015b 00       		.byte	0
+ 473 015c 0E       		.uleb128 0xe
+ 474 015d 9B000000 		.4byte	0x9b
+ 475 0161 6C010000 		.4byte	0x16c
+ 476 0165 0F       		.uleb128 0xf
+ 477 0166 A9000000 		.4byte	0xa9
+ 478 016a FF       		.byte	0xff
+ 479 016b 00       		.byte	0
+ 480 016c 06       		.uleb128 0x6
+ 481 016d 91010000 		.4byte	.LASF20
+ 482 0171 01       		.byte	0x1
+ 483 0172 28       		.byte	0x28
+ 484 0173 00000000 		.4byte	.LFB65
+ 485 0177 40000000 		.4byte	.LFE65-.LFB65
+ 486 017b 01       		.uleb128 0x1
+ 487 017c 9C       		.byte	0x9c
+ 488 017d 18020000 		.4byte	0x218
+ 489 0181 07       		.uleb128 0x7
+ 490 0182 19000000 		.4byte	.LASF17
+ 491 0186 01       		.byte	0x1
+ 492 0187 2A       		.byte	0x2a
+ 493 0188 81000000 		.4byte	0x81
+ 494 018c 1E000000 		.4byte	.LLST1
+ 495 0190 08       		.uleb128 0x8
+ 496 0191 0C000000 		.4byte	.LBB3
+ 497 0195 1E000000 		.4byte	.LBE3-.LBB3
+ 498 0199 FB010000 		.4byte	0x1fb
+ 499 019d 09       		.uleb128 0x9
+ 500 019e FD010000 		.4byte	.LASF18
+ 501 01a2 01       		.byte	0x1
+ 502 01a3 2D       		.byte	0x2d
+ 503 01a4 5C010000 		.4byte	0x15c
+ 504 01a8 03       		.uleb128 0x3
+ 505 01a9 91       		.byte	0x91
+ 506 01aa F87D     		.sleb128 -264
+ 507 01ac 0A       		.uleb128 0xa
+ 508 01ad 1E000000 		.4byte	.LVL10
+ 509 01b1 2A030000 		.4byte	0x32a
+ 510 01b5 D6010000 		.4byte	0x1d6
+ 511 01b9 0B       		.uleb128 0xb
+ 512 01ba 01       		.uleb128 0x1
+ 513 01bb 50       		.byte	0x50
+ 514 01bc 02       		.uleb128 0x2
+ 515 01bd 7D       		.byte	0x7d
+ 516 01be 00       		.sleb128 0
+ 517 01bf 0B       		.uleb128 0xb
+ 518 01c0 01       		.uleb128 0x1
+ 519 01c1 51       		.byte	0x51
+ 520 01c2 03       		.uleb128 0x3
+ 521 01c3 0A       		.byte	0xa
+ 522 01c4 0001     		.2byte	0x100
+ 523 01c6 0B       		.uleb128 0xb
+ARM GAS  C:\Users\malle\AppData\Local\Temp\ccbgbdle.s 			page 12
+
+
+ 524 01c7 01       		.uleb128 0x1
+ 525 01c8 52       		.byte	0x52
+ 526 01c9 05       		.uleb128 0x5
+ 527 01ca 03       		.byte	0x3
+ 528 01cb 34000000 		.4byte	.LC2
+ 529 01cf 0B       		.uleb128 0xb
+ 530 01d0 01       		.uleb128 0x1
+ 531 01d1 53       		.byte	0x53
+ 532 01d2 02       		.uleb128 0x2
+ 533 01d3 74       		.byte	0x74
+ 534 01d4 00       		.sleb128 0
+ 535 01d5 00       		.byte	0
+ 536 01d6 0A       		.uleb128 0xa
+ 537 01d7 24000000 		.4byte	.LVL11
+ 538 01db 35030000 		.4byte	0x335
+ 539 01df EA010000 		.4byte	0x1ea
+ 540 01e3 0B       		.uleb128 0xb
+ 541 01e4 01       		.uleb128 0x1
+ 542 01e5 50       		.byte	0x50
+ 543 01e6 02       		.uleb128 0x2
+ 544 01e7 7D       		.byte	0x7d
+ 545 01e8 00       		.sleb128 0
+ 546 01e9 00       		.byte	0
+ 547 01ea 0C       		.uleb128 0xc
+ 548 01eb 2A000000 		.4byte	.LVL12
+ 549 01ef 40030000 		.4byte	0x340
+ 550 01f3 0B       		.uleb128 0xb
+ 551 01f4 01       		.uleb128 0x1
+ 552 01f5 50       		.byte	0x50
+ 553 01f6 02       		.uleb128 0x2
+ 554 01f7 74       		.byte	0x74
+ 555 01f8 00       		.sleb128 0
+ 556 01f9 00       		.byte	0
+ 557 01fa 00       		.byte	0
+ 558 01fb 0D       		.uleb128 0xd
+ 559 01fc 08000000 		.4byte	.LVL8
+ 560 0200 4B030000 		.4byte	0x34b
+ 561 0204 0C       		.uleb128 0xc
+ 562 0205 32000000 		.4byte	.LVL15
+ 563 0209 35030000 		.4byte	0x335
+ 564 020d 0B       		.uleb128 0xb
+ 565 020e 01       		.uleb128 0x1
+ 566 020f 50       		.byte	0x50
+ 567 0210 05       		.uleb128 0x5
+ 568 0211 03       		.byte	0x3
+ 569 0212 50000000 		.4byte	.LC3
+ 570 0216 00       		.byte	0
+ 571 0217 00       		.byte	0
+ 572 0218 06       		.uleb128 0x6
+ 573 0219 6C010000 		.4byte	.LASF21
+ 574 021d 01       		.byte	0x1
+ 575 021e 39       		.byte	0x39
+ 576 021f 00000000 		.4byte	.LFB66
+ 577 0223 1C000000 		.4byte	.LFE66-.LFB66
+ 578 0227 01       		.uleb128 0x1
+ 579 0228 9C       		.byte	0x9c
+ 580 0229 67020000 		.4byte	0x267
+ARM GAS  C:\Users\malle\AppData\Local\Temp\ccbgbdle.s 			page 13
+
+
+ 581 022d 0A       		.uleb128 0xa
+ 582 022e 08000000 		.4byte	.LVL16
+ 583 0232 56030000 		.4byte	0x356
+ 584 0236 40020000 		.4byte	0x240
+ 585 023a 0B       		.uleb128 0xb
+ 586 023b 01       		.uleb128 0x1
+ 587 023c 50       		.byte	0x50
+ 588 023d 01       		.uleb128 0x1
+ 589 023e 31       		.byte	0x31
+ 590 023f 00       		.byte	0
+ 591 0240 0A       		.uleb128 0xa
+ 592 0241 0E000000 		.4byte	.LVL17
+ 593 0245 61030000 		.4byte	0x361
+ 594 0249 53020000 		.4byte	0x253
+ 595 024d 0B       		.uleb128 0xb
+ 596 024e 01       		.uleb128 0x1
+ 597 024f 50       		.byte	0x50
+ 598 0250 01       		.uleb128 0x1
+ 599 0251 30       		.byte	0x30
+ 600 0252 00       		.byte	0
+ 601 0253 0C       		.uleb128 0xc
+ 602 0254 14000000 		.4byte	.LVL18
+ 603 0258 35030000 		.4byte	0x335
+ 604 025c 0B       		.uleb128 0xb
+ 605 025d 01       		.uleb128 0x1
+ 606 025e 50       		.byte	0x50
+ 607 025f 05       		.uleb128 0x5
+ 608 0260 03       		.byte	0x3
+ 609 0261 68000000 		.4byte	.LC4
+ 610 0265 00       		.byte	0
+ 611 0266 00       		.byte	0
+ 612 0267 06       		.uleb128 0x6
+ 613 0268 A7010000 		.4byte	.LASF22
+ 614 026c 01       		.byte	0x1
+ 615 026d 40       		.byte	0x40
+ 616 026e 00000000 		.4byte	.LFB67
+ 617 0272 1C000000 		.4byte	.LFE67-.LFB67
+ 618 0276 01       		.uleb128 0x1
+ 619 0277 9C       		.byte	0x9c
+ 620 0278 B6020000 		.4byte	0x2b6
+ 621 027c 0A       		.uleb128 0xa
+ 622 027d 08000000 		.4byte	.LVL19
+ 623 0281 61030000 		.4byte	0x361
+ 624 0285 8F020000 		.4byte	0x28f
+ 625 0289 0B       		.uleb128 0xb
+ 626 028a 01       		.uleb128 0x1
+ 627 028b 50       		.byte	0x50
+ 628 028c 01       		.uleb128 0x1
+ 629 028d 31       		.byte	0x31
+ 630 028e 00       		.byte	0
+ 631 028f 0A       		.uleb128 0xa
+ 632 0290 0E000000 		.4byte	.LVL20
+ 633 0294 56030000 		.4byte	0x356
+ 634 0298 A2020000 		.4byte	0x2a2
+ 635 029c 0B       		.uleb128 0xb
+ 636 029d 01       		.uleb128 0x1
+ 637 029e 50       		.byte	0x50
+ARM GAS  C:\Users\malle\AppData\Local\Temp\ccbgbdle.s 			page 14
+
+
+ 638 029f 01       		.uleb128 0x1
+ 639 02a0 30       		.byte	0x30
+ 640 02a1 00       		.byte	0
+ 641 02a2 0C       		.uleb128 0xc
+ 642 02a3 14000000 		.4byte	.LVL21
+ 643 02a7 35030000 		.4byte	0x335
+ 644 02ab 0B       		.uleb128 0xb
+ 645 02ac 01       		.uleb128 0x1
+ 646 02ad 50       		.byte	0x50
+ 647 02ae 05       		.uleb128 0x5
+ 648 02af 03       		.byte	0x3
+ 649 02b0 84000000 		.4byte	.LC5
+ 650 02b4 00       		.byte	0
+ 651 02b5 00       		.byte	0
+ 652 02b6 06       		.uleb128 0x6
+ 653 02b7 34010000 		.4byte	.LASF23
+ 654 02bb 01       		.byte	0x1
+ 655 02bc 4A       		.byte	0x4a
+ 656 02bd 00000000 		.4byte	.LFB68
+ 657 02c1 20000000 		.4byte	.LFE68-.LFB68
+ 658 02c5 01       		.uleb128 0x1
+ 659 02c6 9C       		.byte	0x9c
+ 660 02c7 19030000 		.4byte	0x319
+ 661 02cb 0A       		.uleb128 0xa
+ 662 02cc 08000000 		.4byte	.LVL22
+ 663 02d0 35030000 		.4byte	0x335
+ 664 02d4 E2020000 		.4byte	0x2e2
+ 665 02d8 0B       		.uleb128 0xb
+ 666 02d9 01       		.uleb128 0x1
+ 667 02da 50       		.byte	0x50
+ 668 02db 05       		.uleb128 0x5
+ 669 02dc 03       		.byte	0x3
+ 670 02dd A0000000 		.4byte	.LC6
+ 671 02e1 00       		.byte	0
+ 672 02e2 0A       		.uleb128 0xa
+ 673 02e3 0E000000 		.4byte	.LVL23
+ 674 02e7 56030000 		.4byte	0x356
+ 675 02eb F5020000 		.4byte	0x2f5
+ 676 02ef 0B       		.uleb128 0xb
+ 677 02f0 01       		.uleb128 0x1
+ 678 02f1 50       		.byte	0x50
+ 679 02f2 01       		.uleb128 0x1
+ 680 02f3 30       		.byte	0x30
+ 681 02f4 00       		.byte	0
+ 682 02f5 0A       		.uleb128 0xa
+ 683 02f6 14000000 		.4byte	.LVL24
+ 684 02fa 61030000 		.4byte	0x361
+ 685 02fe 08030000 		.4byte	0x308
+ 686 0302 0B       		.uleb128 0xb
+ 687 0303 01       		.uleb128 0x1
+ 688 0304 50       		.byte	0x50
+ 689 0305 01       		.uleb128 0x1
+ 690 0306 30       		.byte	0x30
+ 691 0307 00       		.byte	0
+ 692 0308 0C       		.uleb128 0xc
+ 693 0309 1A000000 		.4byte	.LVL25
+ 694 030d 40030000 		.4byte	0x340
+ARM GAS  C:\Users\malle\AppData\Local\Temp\ccbgbdle.s 			page 15
+
+
+ 695 0311 0B       		.uleb128 0xb
+ 696 0312 01       		.uleb128 0x1
+ 697 0313 50       		.byte	0x50
+ 698 0314 02       		.uleb128 0x2
+ 699 0315 08       		.byte	0x8
+ 700 0316 64       		.byte	0x64
+ 701 0317 00       		.byte	0
+ 702 0318 00       		.byte	0
+ 703 0319 10       		.uleb128 0x10
+ 704 031a 39010000 		.4byte	.LASF33
+ 705 031e 0A       		.byte	0xa
+ 706 031f 1207     		.2byte	0x712
+ 707 0321 25030000 		.4byte	0x325
+ 708 0325 11       		.uleb128 0x11
+ 709 0326 76000000 		.4byte	0x76
+ 710 032a 12       		.uleb128 0x12
+ 711 032b 28000000 		.4byte	.LASF24
+ 712 032f 28000000 		.4byte	.LASF24
+ 713 0333 05       		.byte	0x5
+ 714 0334 FD       		.byte	0xfd
+ 715 0335 12       		.uleb128 0x12
+ 716 0336 2B020000 		.4byte	.LASF25
+ 717 033a 2B020000 		.4byte	.LASF25
+ 718 033e 06       		.byte	0x6
+ 719 033f 8B       		.byte	0x8b
+ 720 0340 12       		.uleb128 0x12
+ 721 0341 B6010000 		.4byte	.LASF26
+ 722 0345 B6010000 		.4byte	.LASF26
+ 723 0349 07       		.byte	0x7
+ 724 034a C3       		.byte	0xc3
+ 725 034b 12       		.uleb128 0x12
+ 726 034c 46010000 		.4byte	.LASF27
+ 727 0350 46010000 		.4byte	.LASF27
+ 728 0354 07       		.byte	0x7
+ 729 0355 C5       		.byte	0xc5
+ 730 0356 12       		.uleb128 0x12
+ 731 0357 0B000000 		.4byte	.LASF28
+ 732 035b 0B000000 		.4byte	.LASF28
+ 733 035f 08       		.byte	0x8
+ 734 0360 26       		.byte	0x26
+ 735 0361 12       		.uleb128 0x12
+ 736 0362 31000000 		.4byte	.LASF29
+ 737 0366 31000000 		.4byte	.LASF29
+ 738 036a 09       		.byte	0x9
+ 739 036b 26       		.byte	0x26
+ 740 036c 00       		.byte	0
+ 741              		.section	.debug_abbrev,"",%progbits
+ 742              	.Ldebug_abbrev0:
+ 743 0000 01       		.uleb128 0x1
+ 744 0001 11       		.uleb128 0x11
+ 745 0002 01       		.byte	0x1
+ 746 0003 25       		.uleb128 0x25
+ 747 0004 0E       		.uleb128 0xe
+ 748 0005 13       		.uleb128 0x13
+ 749 0006 0B       		.uleb128 0xb
+ 750 0007 03       		.uleb128 0x3
+ 751 0008 0E       		.uleb128 0xe
+ARM GAS  C:\Users\malle\AppData\Local\Temp\ccbgbdle.s 			page 16
+
+
+ 752 0009 1B       		.uleb128 0x1b
+ 753 000a 0E       		.uleb128 0xe
+ 754 000b 55       		.uleb128 0x55
+ 755 000c 17       		.uleb128 0x17
+ 756 000d 11       		.uleb128 0x11
+ 757 000e 01       		.uleb128 0x1
+ 758 000f 10       		.uleb128 0x10
+ 759 0010 17       		.uleb128 0x17
+ 760 0011 00       		.byte	0
+ 761 0012 00       		.byte	0
+ 762 0013 02       		.uleb128 0x2
+ 763 0014 24       		.uleb128 0x24
+ 764 0015 00       		.byte	0
+ 765 0016 0B       		.uleb128 0xb
+ 766 0017 0B       		.uleb128 0xb
+ 767 0018 3E       		.uleb128 0x3e
+ 768 0019 0B       		.uleb128 0xb
+ 769 001a 03       		.uleb128 0x3
+ 770 001b 0E       		.uleb128 0xe
+ 771 001c 00       		.byte	0
+ 772 001d 00       		.byte	0
+ 773 001e 03       		.uleb128 0x3
+ 774 001f 16       		.uleb128 0x16
+ 775 0020 00       		.byte	0
+ 776 0021 03       		.uleb128 0x3
+ 777 0022 0E       		.uleb128 0xe
+ 778 0023 3A       		.uleb128 0x3a
+ 779 0024 0B       		.uleb128 0xb
+ 780 0025 3B       		.uleb128 0x3b
+ 781 0026 0B       		.uleb128 0xb
+ 782 0027 49       		.uleb128 0x49
+ 783 0028 13       		.uleb128 0x13
+ 784 0029 00       		.byte	0
+ 785 002a 00       		.byte	0
+ 786 002b 04       		.uleb128 0x4
+ 787 002c 24       		.uleb128 0x24
+ 788 002d 00       		.byte	0
+ 789 002e 0B       		.uleb128 0xb
+ 790 002f 0B       		.uleb128 0xb
+ 791 0030 3E       		.uleb128 0x3e
+ 792 0031 0B       		.uleb128 0xb
+ 793 0032 03       		.uleb128 0x3
+ 794 0033 08       		.uleb128 0x8
+ 795 0034 00       		.byte	0
+ 796 0035 00       		.byte	0
+ 797 0036 05       		.uleb128 0x5
+ 798 0037 16       		.uleb128 0x16
+ 799 0038 00       		.byte	0
+ 800 0039 03       		.uleb128 0x3
+ 801 003a 0E       		.uleb128 0xe
+ 802 003b 3A       		.uleb128 0x3a
+ 803 003c 0B       		.uleb128 0xb
+ 804 003d 3B       		.uleb128 0x3b
+ 805 003e 05       		.uleb128 0x5
+ 806 003f 49       		.uleb128 0x49
+ 807 0040 13       		.uleb128 0x13
+ 808 0041 00       		.byte	0
+ARM GAS  C:\Users\malle\AppData\Local\Temp\ccbgbdle.s 			page 17
+
+
+ 809 0042 00       		.byte	0
+ 810 0043 06       		.uleb128 0x6
+ 811 0044 2E       		.uleb128 0x2e
+ 812 0045 01       		.byte	0x1
+ 813 0046 3F       		.uleb128 0x3f
+ 814 0047 19       		.uleb128 0x19
+ 815 0048 03       		.uleb128 0x3
+ 816 0049 0E       		.uleb128 0xe
+ 817 004a 3A       		.uleb128 0x3a
+ 818 004b 0B       		.uleb128 0xb
+ 819 004c 3B       		.uleb128 0x3b
+ 820 004d 0B       		.uleb128 0xb
+ 821 004e 27       		.uleb128 0x27
+ 822 004f 19       		.uleb128 0x19
+ 823 0050 11       		.uleb128 0x11
+ 824 0051 01       		.uleb128 0x1
+ 825 0052 12       		.uleb128 0x12
+ 826 0053 06       		.uleb128 0x6
+ 827 0054 40       		.uleb128 0x40
+ 828 0055 18       		.uleb128 0x18
+ 829 0056 9742     		.uleb128 0x2117
+ 830 0058 19       		.uleb128 0x19
+ 831 0059 01       		.uleb128 0x1
+ 832 005a 13       		.uleb128 0x13
+ 833 005b 00       		.byte	0
+ 834 005c 00       		.byte	0
+ 835 005d 07       		.uleb128 0x7
+ 836 005e 34       		.uleb128 0x34
+ 837 005f 00       		.byte	0
+ 838 0060 03       		.uleb128 0x3
+ 839 0061 0E       		.uleb128 0xe
+ 840 0062 3A       		.uleb128 0x3a
+ 841 0063 0B       		.uleb128 0xb
+ 842 0064 3B       		.uleb128 0x3b
+ 843 0065 0B       		.uleb128 0xb
+ 844 0066 49       		.uleb128 0x49
+ 845 0067 13       		.uleb128 0x13
+ 846 0068 02       		.uleb128 0x2
+ 847 0069 17       		.uleb128 0x17
+ 848 006a 00       		.byte	0
+ 849 006b 00       		.byte	0
+ 850 006c 08       		.uleb128 0x8
+ 851 006d 0B       		.uleb128 0xb
+ 852 006e 01       		.byte	0x1
+ 853 006f 11       		.uleb128 0x11
+ 854 0070 01       		.uleb128 0x1
+ 855 0071 12       		.uleb128 0x12
+ 856 0072 06       		.uleb128 0x6
+ 857 0073 01       		.uleb128 0x1
+ 858 0074 13       		.uleb128 0x13
+ 859 0075 00       		.byte	0
+ 860 0076 00       		.byte	0
+ 861 0077 09       		.uleb128 0x9
+ 862 0078 34       		.uleb128 0x34
+ 863 0079 00       		.byte	0
+ 864 007a 03       		.uleb128 0x3
+ 865 007b 0E       		.uleb128 0xe
+ARM GAS  C:\Users\malle\AppData\Local\Temp\ccbgbdle.s 			page 18
+
+
+ 866 007c 3A       		.uleb128 0x3a
+ 867 007d 0B       		.uleb128 0xb
+ 868 007e 3B       		.uleb128 0x3b
+ 869 007f 0B       		.uleb128 0xb
+ 870 0080 49       		.uleb128 0x49
+ 871 0081 13       		.uleb128 0x13
+ 872 0082 02       		.uleb128 0x2
+ 873 0083 18       		.uleb128 0x18
+ 874 0084 00       		.byte	0
+ 875 0085 00       		.byte	0
+ 876 0086 0A       		.uleb128 0xa
+ 877 0087 898201   		.uleb128 0x4109
+ 878 008a 01       		.byte	0x1
+ 879 008b 11       		.uleb128 0x11
+ 880 008c 01       		.uleb128 0x1
+ 881 008d 31       		.uleb128 0x31
+ 882 008e 13       		.uleb128 0x13
+ 883 008f 01       		.uleb128 0x1
+ 884 0090 13       		.uleb128 0x13
+ 885 0091 00       		.byte	0
+ 886 0092 00       		.byte	0
+ 887 0093 0B       		.uleb128 0xb
+ 888 0094 8A8201   		.uleb128 0x410a
+ 889 0097 00       		.byte	0
+ 890 0098 02       		.uleb128 0x2
+ 891 0099 18       		.uleb128 0x18
+ 892 009a 9142     		.uleb128 0x2111
+ 893 009c 18       		.uleb128 0x18
+ 894 009d 00       		.byte	0
+ 895 009e 00       		.byte	0
+ 896 009f 0C       		.uleb128 0xc
+ 897 00a0 898201   		.uleb128 0x4109
+ 898 00a3 01       		.byte	0x1
+ 899 00a4 11       		.uleb128 0x11
+ 900 00a5 01       		.uleb128 0x1
+ 901 00a6 31       		.uleb128 0x31
+ 902 00a7 13       		.uleb128 0x13
+ 903 00a8 00       		.byte	0
+ 904 00a9 00       		.byte	0
+ 905 00aa 0D       		.uleb128 0xd
+ 906 00ab 898201   		.uleb128 0x4109
+ 907 00ae 00       		.byte	0
+ 908 00af 11       		.uleb128 0x11
+ 909 00b0 01       		.uleb128 0x1
+ 910 00b1 31       		.uleb128 0x31
+ 911 00b2 13       		.uleb128 0x13
+ 912 00b3 00       		.byte	0
+ 913 00b4 00       		.byte	0
+ 914 00b5 0E       		.uleb128 0xe
+ 915 00b6 01       		.uleb128 0x1
+ 916 00b7 01       		.byte	0x1
+ 917 00b8 49       		.uleb128 0x49
+ 918 00b9 13       		.uleb128 0x13
+ 919 00ba 01       		.uleb128 0x1
+ 920 00bb 13       		.uleb128 0x13
+ 921 00bc 00       		.byte	0
+ 922 00bd 00       		.byte	0
+ARM GAS  C:\Users\malle\AppData\Local\Temp\ccbgbdle.s 			page 19
+
+
+ 923 00be 0F       		.uleb128 0xf
+ 924 00bf 21       		.uleb128 0x21
+ 925 00c0 00       		.byte	0
+ 926 00c1 49       		.uleb128 0x49
+ 927 00c2 13       		.uleb128 0x13
+ 928 00c3 2F       		.uleb128 0x2f
+ 929 00c4 0B       		.uleb128 0xb
+ 930 00c5 00       		.byte	0
+ 931 00c6 00       		.byte	0
+ 932 00c7 10       		.uleb128 0x10
+ 933 00c8 34       		.uleb128 0x34
+ 934 00c9 00       		.byte	0
+ 935 00ca 03       		.uleb128 0x3
+ 936 00cb 0E       		.uleb128 0xe
+ 937 00cc 3A       		.uleb128 0x3a
+ 938 00cd 0B       		.uleb128 0xb
+ 939 00ce 3B       		.uleb128 0x3b
+ 940 00cf 05       		.uleb128 0x5
+ 941 00d0 49       		.uleb128 0x49
+ 942 00d1 13       		.uleb128 0x13
+ 943 00d2 3F       		.uleb128 0x3f
+ 944 00d3 19       		.uleb128 0x19
+ 945 00d4 3C       		.uleb128 0x3c
+ 946 00d5 19       		.uleb128 0x19
+ 947 00d6 00       		.byte	0
+ 948 00d7 00       		.byte	0
+ 949 00d8 11       		.uleb128 0x11
+ 950 00d9 35       		.uleb128 0x35
+ 951 00da 00       		.byte	0
+ 952 00db 49       		.uleb128 0x49
+ 953 00dc 13       		.uleb128 0x13
+ 954 00dd 00       		.byte	0
+ 955 00de 00       		.byte	0
+ 956 00df 12       		.uleb128 0x12
+ 957 00e0 2E       		.uleb128 0x2e
+ 958 00e1 00       		.byte	0
+ 959 00e2 3F       		.uleb128 0x3f
+ 960 00e3 19       		.uleb128 0x19
+ 961 00e4 3C       		.uleb128 0x3c
+ 962 00e5 19       		.uleb128 0x19
+ 963 00e6 6E       		.uleb128 0x6e
+ 964 00e7 0E       		.uleb128 0xe
+ 965 00e8 03       		.uleb128 0x3
+ 966 00e9 0E       		.uleb128 0xe
+ 967 00ea 3A       		.uleb128 0x3a
+ 968 00eb 0B       		.uleb128 0xb
+ 969 00ec 3B       		.uleb128 0x3b
+ 970 00ed 0B       		.uleb128 0xb
+ 971 00ee 00       		.byte	0
+ 972 00ef 00       		.byte	0
+ 973 00f0 00       		.byte	0
+ 974              		.section	.debug_loc,"",%progbits
+ 975              	.Ldebug_loc0:
+ 976              	.LLST0:
+ 977 0000 08000000 		.4byte	.LVL0
+ 978 0004 18000000 		.4byte	.LVL1
+ 979 0008 0100     		.2byte	0x1
+ARM GAS  C:\Users\malle\AppData\Local\Temp\ccbgbdle.s 			page 20
+
+
+ 980 000a 50       		.byte	0x50
+ 981 000b 2A000000 		.4byte	.LVL5
+ 982 000f 2C000000 		.4byte	.LVL6
+ 983 0013 0100     		.2byte	0x1
+ 984 0015 50       		.byte	0x50
+ 985 0016 00000000 		.4byte	0
+ 986 001a 00000000 		.4byte	0
+ 987              	.LLST1:
+ 988 001e 08000000 		.4byte	.LVL8
+ 989 0022 1A000000 		.4byte	.LVL9
+ 990 0026 0100     		.2byte	0x1
+ 991 0028 50       		.byte	0x50
+ 992 0029 2C000000 		.4byte	.LVL13
+ 993 002d 2E000000 		.4byte	.LVL14
+ 994 0031 0100     		.2byte	0x1
+ 995 0033 50       		.byte	0x50
+ 996 0034 00000000 		.4byte	0
+ 997 0038 00000000 		.4byte	0
+ 998              		.section	.debug_aranges,"",%progbits
+ 999 0000 3C000000 		.4byte	0x3c
+ 1000 0004 0200     		.2byte	0x2
+ 1001 0006 00000000 		.4byte	.Ldebug_info0
+ 1002 000a 04       		.byte	0x4
+ 1003 000b 00       		.byte	0
+ 1004 000c 0000     		.2byte	0
+ 1005 000e 0000     		.2byte	0
+ 1006 0010 00000000 		.4byte	.LFB64
+ 1007 0014 3C000000 		.4byte	.LFE64-.LFB64
+ 1008 0018 00000000 		.4byte	.LFB65
+ 1009 001c 40000000 		.4byte	.LFE65-.LFB65
+ 1010 0020 00000000 		.4byte	.LFB66
+ 1011 0024 1C000000 		.4byte	.LFE66-.LFB66
+ 1012 0028 00000000 		.4byte	.LFB67
+ 1013 002c 1C000000 		.4byte	.LFE67-.LFB67
+ 1014 0030 00000000 		.4byte	.LFB68
+ 1015 0034 20000000 		.4byte	.LFE68-.LFB68
+ 1016 0038 00000000 		.4byte	0
+ 1017 003c 00000000 		.4byte	0
+ 1018              		.section	.debug_ranges,"",%progbits
+ 1019              	.Ldebug_ranges0:
+ 1020 0000 00000000 		.4byte	.LFB64
+ 1021 0004 3C000000 		.4byte	.LFE64
+ 1022 0008 00000000 		.4byte	.LFB65
+ 1023 000c 40000000 		.4byte	.LFE65
+ 1024 0010 00000000 		.4byte	.LFB66
+ 1025 0014 1C000000 		.4byte	.LFE66
+ 1026 0018 00000000 		.4byte	.LFB67
+ 1027 001c 1C000000 		.4byte	.LFE67
+ 1028 0020 00000000 		.4byte	.LFB68
+ 1029 0024 20000000 		.4byte	.LFE68
+ 1030 0028 00000000 		.4byte	0
+ 1031 002c 00000000 		.4byte	0
+ 1032              		.section	.debug_line,"",%progbits
+ 1033              	.Ldebug_line0:
+ 1034 0000 5F020000 		.section	.debug_str,"MS",%progbits,1
+ 1034      0200F401 
+ 1034      00000201 
+ARM GAS  C:\Users\malle\AppData\Local\Temp\ccbgbdle.s 			page 21
+
+
+ 1034      FB0E0D00 
+ 1034      01010101 
+ 1035              	.LASF31:
+ 1036 0000 636F6E74 		.ascii	"controls.c\000"
+ 1036      726F6C73 
+ 1036      2E6300
+ 1037              	.LASF28:
+ 1038 000b 50696E5F 		.ascii	"Pin_IN1_Write\000"
+ 1038      494E315F 
+ 1038      57726974 
+ 1038      6500
+ 1039              	.LASF17:
+ 1040 0019 63757272 		.ascii	"curr\000"
+ 1040      00
+ 1041              	.LASF9:
+ 1042 001e 5F5F696E 		.ascii	"__int32_t\000"
+ 1042      7433325F 
+ 1042      7400
+ 1043              	.LASF24:
+ 1044 0028 736E7072 		.ascii	"snprintf\000"
+ 1044      696E7466 
+ 1044      00
+ 1045              	.LASF29:
+ 1046 0031 50696E5F 		.ascii	"Pin_IN2_Write\000"
+ 1046      494E325F 
+ 1046      57726974 
+ 1046      6500
+ 1047              	.LASF32:
+ 1048 003f 433A5C53 		.ascii	"C:\\SWs2\\GFV\\MOTOR_STYRING\\DC_MOTOR_HBRO.cydsn\000"
+ 1048      5773325C 
+ 1048      4746565C 
+ 1048      4D4F544F 
+ 1048      525F5354 
+ 1049              	.LASF12:
+ 1050 006d 666C6F61 		.ascii	"float\000"
+ 1050      7400
+ 1051              	.LASF1:
+ 1052 0073 756E7369 		.ascii	"unsigned char\000"
+ 1052      676E6564 
+ 1052      20636861 
+ 1052      7200
+ 1053              	.LASF30:
+ 1054 0081 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1054      43313120 
+ 1054      352E342E 
+ 1054      31203230 
+ 1054      31363036 
+ 1055 00b4 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 1055      20726576 
+ 1055      6973696F 
+ 1055      6E203233 
+ 1055      37373135 
+ 1056 00e7 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1056      66756E63 
+ 1056      74696F6E 
+ 1056      2D736563 
+ 1056      74696F6E 
+ARM GAS  C:\Users\malle\AppData\Local\Temp\ccbgbdle.s 			page 22
+
+
+ 1057              	.LASF5:
+ 1058 010f 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1058      20756E73 
+ 1058      69676E65 
+ 1058      6420696E 
+ 1058      7400
+ 1059              	.LASF3:
+ 1060 0121 73686F72 		.ascii	"short unsigned int\000"
+ 1060      7420756E 
+ 1060      7369676E 
+ 1060      65642069 
+ 1060      6E7400
+ 1061              	.LASF23:
+ 1062 0134 73746F70 		.ascii	"stop\000"
+ 1062      00
+ 1063              	.LASF33:
+ 1064 0139 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 1064      52784275 
+ 1064      66666572 
+ 1064      00
+ 1065              	.LASF27:
+ 1066 0146 50574D5F 		.ascii	"PWM_1_ReadCompare\000"
+ 1066      315F5265 
+ 1066      6164436F 
+ 1066      6D706172 
+ 1066      6500
+ 1067              	.LASF13:
+ 1068 0158 646F7562 		.ascii	"double\000"
+ 1068      6C6500
+ 1069              	.LASF8:
+ 1070 015f 756E7369 		.ascii	"unsigned int\000"
+ 1070      676E6564 
+ 1070      20696E74 
+ 1070      00
+ 1071              	.LASF21:
+ 1072 016c 64726976 		.ascii	"driveForwards\000"
+ 1072      65466F72 
+ 1072      77617264 
+ 1072      7300
+ 1073              	.LASF7:
+ 1074 017a 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1074      206C6F6E 
+ 1074      6720756E 
+ 1074      7369676E 
+ 1074      65642069 
+ 1075              	.LASF20:
+ 1076 0191 696E6372 		.ascii	"increaseSpeed\000"
+ 1076      65617365 
+ 1076      53706565 
+ 1076      6400
+ 1077              	.LASF10:
+ 1078 019f 696E7433 		.ascii	"int32_t\000"
+ 1078      325F7400 
+ 1079              	.LASF22:
+ 1080 01a7 64726976 		.ascii	"driveBackwards\000"
+ 1080      65426163 
+ 1080      6B776172 
+ARM GAS  C:\Users\malle\AppData\Local\Temp\ccbgbdle.s 			page 23
+
+
+ 1080      647300
+ 1081              	.LASF26:
+ 1082 01b6 50574D5F 		.ascii	"PWM_1_WriteCompare\000"
+ 1082      315F5772 
+ 1082      69746543 
+ 1082      6F6D7061 
+ 1082      726500
+ 1083              	.LASF6:
+ 1084 01c9 6C6F6E67 		.ascii	"long long int\000"
+ 1084      206C6F6E 
+ 1084      6720696E 
+ 1084      7400
+ 1085              	.LASF16:
+ 1086 01d7 73697A65 		.ascii	"sizetype\000"
+ 1086      74797065 
+ 1086      00
+ 1087              	.LASF14:
+ 1088 01e0 63686172 		.ascii	"char\000"
+ 1088      00
+ 1089              	.LASF19:
+ 1090 01e5 64656372 		.ascii	"decreaseSpeed\000"
+ 1090      65617365 
+ 1090      53706565 
+ 1090      6400
+ 1091              	.LASF2:
+ 1092 01f3 73686F72 		.ascii	"short int\000"
+ 1092      7420696E 
+ 1092      7400
+ 1093              	.LASF18:
+ 1094 01fd 62756666 		.ascii	"buffer\000"
+ 1094      657200
+ 1095              	.LASF11:
+ 1096 0204 75696E74 		.ascii	"uint8\000"
+ 1096      3800
+ 1097              	.LASF4:
+ 1098 020a 6C6F6E67 		.ascii	"long int\000"
+ 1098      20696E74 
+ 1098      00
+ 1099              	.LASF15:
+ 1100 0213 6C6F6E67 		.ascii	"long double\000"
+ 1100      20646F75 
+ 1100      626C6500 
+ 1101              	.LASF0:
+ 1102 021f 7369676E 		.ascii	"signed char\000"
+ 1102      65642063 
+ 1102      68617200 
+ 1103              	.LASF25:
+ 1104 022b 55415254 		.ascii	"UART_1_PutString\000"
+ 1104      5F315F50 
+ 1104      75745374 
+ 1104      72696E67 
+ 1104      00
+ 1105              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

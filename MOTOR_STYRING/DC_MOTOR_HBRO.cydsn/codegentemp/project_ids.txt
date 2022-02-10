@@ -1,0 +1,7 @@
+C:\SWs2\GFV\MOTOR_STYRING\DC-Motor-PWM.cydsn\DC-Motor-PWM.cyprj|7d48a819-9a46-42d0-a63a-59fc0d160d5f
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|daccc9d9-6906-4b66-a6a0-f750cf921db3
+C:\Users\malle\OneDrive\Dokumenter\PSoC Creator\4.4\Downloads ( 4.4).cylib\Downloads ( 4.4).cyprj|851c6118-976a-4e0f-a2be-884cdc50c660
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|95515bf7-815f-4155-a80c-b38d1142f7b1
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|06d72791-95f3-454c-a721-cc1af28bf512
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|ded70fcd-dd80-4412-ab2c-edb7a9fde3cd
+C:\SWs2\GFV\MOTOR_STYRING\DC_MOTOR_HBRO.cydsn\DC_MOTOR_HBRO.cyprj|f42cda9a-06ea-409c-865d-e78053a0212d

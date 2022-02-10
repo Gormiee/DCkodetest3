@@ -1,0 +1,6 @@
+C:\Users\JNPou\IDrive-Sync\SW_2_semester\GFV\DC-Motor-PWM\DC-Motor-PWM.cydsn\DC-Motor-PWM.cyprj|047bc3fb-08dd-405b-b5fb-6b8a9f015b10
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|72b8ed25-23bc-4f36-9d30-213af552f476
+C:\Users\JNPou\OneDrive\Dokumenter\PSoC Creator\4.4\Downloads ( 4.4).cylib\Downloads ( 4.4).cyprj|aa93f489-913d-4e45-969e-c7016fc22290
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|0e9cd1d0-ff72-4f7c-bfbc-93af920061ea
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|6412a5df-6702-4789-9857-5f9c459a512a
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|0b97ccff-2950-477e-a3e0-0f74994f431d

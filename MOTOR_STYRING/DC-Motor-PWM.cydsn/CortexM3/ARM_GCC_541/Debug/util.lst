@@ -1,0 +1,1133 @@
+ARM GAS  C:\Users\au485450\AppData\Local\Temp\ccuszgGJ.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"util.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.print_help,"ax",%progbits
+  20              		.align	2
+  21              		.global	print_help
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	print_help, %function
+  25              	print_help:
+  26              	.LFB63:
+  27              		.file 1 "util.c"
+   1:util.c        **** /* ========================================
+   2:util.c        ****  *
+   3:util.c        ****  * Copyright YOUR COMPANY, THE YEAR
+   4:util.c        ****  * All Rights Reserved
+   5:util.c        ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:util.c        ****  *
+   7:util.c        ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:util.c        ****  * WHICH IS THE PROPERTY OF your company.
+   9:util.c        ****  *
+  10:util.c        ****  * ========================================
+  11:util.c        **** */
+  12:util.c        **** #include "project.h"
+  13:util.c        **** #include "util.h"
+  14:util.c        **** #include "controls.h"
+  15:util.c        **** 
+  16:util.c        **** /*
+  17:util.c        **** Prints command options in terminal.
+  18:util.c        **** */
+  19:util.c        **** void print_help()
+  20:util.c        **** {
+  28              		.loc 1 20 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 08B5     		push	{r3, lr}
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 3, -8
+  35              		.cfi_offset 14, -4
+  21:util.c        ****     UART_1_PutString("0: Stop\r\n");
+  36              		.loc 1 21 0
+ARM GAS  C:\Users\au485450\AppData\Local\Temp\ccuszgGJ.s 			page 2
+
+
+  37 0002 0948     		ldr	r0, .L3
+  38 0004 FFF7FEFF 		bl	UART_1_PutString
+  39              	.LVL0:
+  22:util.c        ****     UART_1_PutString("1: Drive forwards\r\n");
+  40              		.loc 1 22 0
+  41 0008 0848     		ldr	r0, .L3+4
+  42 000a FFF7FEFF 		bl	UART_1_PutString
+  43              	.LVL1:
+  23:util.c        ****     UART_1_PutString("2: Drive backwards\r\n");
+  44              		.loc 1 23 0
+  45 000e 0848     		ldr	r0, .L3+8
+  46 0010 FFF7FEFF 		bl	UART_1_PutString
+  47              	.LVL2:
+  24:util.c        ****     UART_1_PutString("q: Decrease speed\r\n");
+  48              		.loc 1 24 0
+  49 0014 0748     		ldr	r0, .L3+12
+  50 0016 FFF7FEFF 		bl	UART_1_PutString
+  51              	.LVL3:
+  25:util.c        ****     UART_1_PutString("w: Increase speed\r\n");
+  52              		.loc 1 25 0
+  53 001a 0748     		ldr	r0, .L3+16
+  54 001c FFF7FEFF 		bl	UART_1_PutString
+  55              	.LVL4:
+  26:util.c        ****     UART_1_PutString("h: Show options\r\n");
+  56              		.loc 1 26 0
+  57 0020 0648     		ldr	r0, .L3+20
+  58 0022 FFF7FEFF 		bl	UART_1_PutString
+  59              	.LVL5:
+  60 0026 08BD     		pop	{r3, pc}
+  61              	.L4:
+  62              		.align	2
+  63              	.L3:
+  64 0028 00000000 		.word	.LC0
+  65 002c 0C000000 		.word	.LC1
+  66 0030 20000000 		.word	.LC2
+  67 0034 38000000 		.word	.LC3
+  68 0038 4C000000 		.word	.LC4
+  69 003c 60000000 		.word	.LC5
+  70              		.cfi_endproc
+  71              	.LFE63:
+  72              		.size	print_help, .-print_help
+  73              		.section	.text.handleByteReceived,"ax",%progbits
+  74              		.align	2
+  75              		.global	handleByteReceived
+  76              		.thumb
+  77              		.thumb_func
+  78              		.type	handleByteReceived, %function
+  79              	handleByteReceived:
+  80              	.LFB64:
+  27:util.c        ****     
+  28:util.c        **** }
+  29:util.c        **** 
+  30:util.c        **** /*
+  31:util.c        **** Handle incoming commands from UART. Calls relevant control functions.
+  32:util.c        **** */
+  33:util.c        **** void handleByteReceived(uint8_t byteReceived)
+  34:util.c        **** {
+ARM GAS  C:\Users\au485450\AppData\Local\Temp\ccuszgGJ.s 			page 3
+
+
+  81              		.loc 1 34 0
+  82              		.cfi_startproc
+  83              		@ args = 0, pretend = 0, frame = 0
+  84              		@ frame_needed = 0, uses_anonymous_args = 0
+  85              	.LVL6:
+  86 0000 08B5     		push	{r3, lr}
+  87              		.cfi_def_cfa_offset 8
+  88              		.cfi_offset 3, -8
+  89              		.cfi_offset 14, -4
+  35:util.c        ****     switch(byteReceived)
+  90              		.loc 1 35 0
+  91 0002 3228     		cmp	r0, #50
+  92 0004 18D0     		beq	.L7
+  93 0006 04D8     		bhi	.L8
+  94 0008 3028     		cmp	r0, #48
+  95 000a 18D0     		beq	.L9
+  96 000c 3128     		cmp	r0, #49
+  97 000e 10D0     		beq	.L10
+  98 0010 08BD     		pop	{r3, pc}
+  99              	.L8:
+ 100 0012 7128     		cmp	r0, #113
+ 101 0014 04D0     		beq	.L11
+ 102 0016 7728     		cmp	r0, #119
+ 103 0018 05D0     		beq	.L12
+ 104 001a 6828     		cmp	r0, #104
+ 105 001c 11D1     		bne	.L5
+ 106 001e 05E0     		b	.L13
+ 107              	.L11:
+  36:util.c        ****     {
+  37:util.c        ****         case 'q' :
+  38:util.c        ****         {
+  39:util.c        ****             decreaseSpeed();
+ 108              		.loc 1 39 0
+ 109 0020 FFF7FEFF 		bl	decreaseSpeed
+ 110              	.LVL7:
+  40:util.c        ****         }
+  41:util.c        ****         break;
+ 111              		.loc 1 41 0
+ 112 0024 08BD     		pop	{r3, pc}
+ 113              	.LVL8:
+ 114              	.L12:
+  42:util.c        ****         case 'w' :
+  43:util.c        ****         {
+  44:util.c        ****             increaseSpeed();
+ 115              		.loc 1 44 0
+ 116 0026 FFF7FEFF 		bl	increaseSpeed
+ 117              	.LVL9:
+  45:util.c        ****         }
+  46:util.c        ****         break;
+ 118              		.loc 1 46 0
+ 119 002a 08BD     		pop	{r3, pc}
+ 120              	.LVL10:
+ 121              	.L13:
+  47:util.c        ****         case 'h' :
+  48:util.c        ****         {
+  49:util.c        ****             print_help();
+ 122              		.loc 1 49 0
+ARM GAS  C:\Users\au485450\AppData\Local\Temp\ccuszgGJ.s 			page 4
+
+
+ 123 002c FFF7FEFF 		bl	print_help
+ 124              	.LVL11:
+  50:util.c        ****         }
+  51:util.c        ****         break;
+ 125              		.loc 1 51 0
+ 126 0030 08BD     		pop	{r3, pc}
+ 127              	.LVL12:
+ 128              	.L10:
+  52:util.c        ****         case '1' :
+  53:util.c        ****         {
+  54:util.c        ****             driveForwards();
+ 129              		.loc 1 54 0
+ 130 0032 FFF7FEFF 		bl	driveForwards
+ 131              	.LVL13:
+  55:util.c        ****         }
+  56:util.c        ****         break;
+ 132              		.loc 1 56 0
+ 133 0036 08BD     		pop	{r3, pc}
+ 134              	.LVL14:
+ 135              	.L7:
+  57:util.c        ****         case '2' :
+  58:util.c        ****         {
+  59:util.c        ****             driveBackwards();
+ 136              		.loc 1 59 0
+ 137 0038 FFF7FEFF 		bl	driveBackwards
+ 138              	.LVL15:
+  60:util.c        ****         }
+  61:util.c        ****         break;
+ 139              		.loc 1 61 0
+ 140 003c 08BD     		pop	{r3, pc}
+ 141              	.LVL16:
+ 142              	.L9:
+  62:util.c        ****         case '0' :
+  63:util.c        ****         {
+  64:util.c        ****             stop();
+ 143              		.loc 1 64 0
+ 144 003e FFF7FEFF 		bl	stop
+ 145              	.LVL17:
+ 146              	.L5:
+ 147 0042 08BD     		pop	{r3, pc}
+ 148              		.cfi_endproc
+ 149              	.LFE64:
+ 150              		.size	handleByteReceived, .-handleByteReceived
+ 151              		.section	.text.init,"ax",%progbits
+ 152              		.align	2
+ 153              		.global	init
+ 154              		.thumb
+ 155              		.thumb_func
+ 156              		.type	init, %function
+ 157              	init:
+ 158              	.LFB65:
+  65:util.c        ****             
+  66:util.c        ****         }
+  67:util.c        ****         break;
+  68:util.c        ****         default :
+  69:util.c        ****         {
+  70:util.c        ****             // nothing
+ARM GAS  C:\Users\au485450\AppData\Local\Temp\ccuszgGJ.s 			page 5
+
+
+  71:util.c        ****         }
+  72:util.c        ****         break;
+  73:util.c        ****     }
+  74:util.c        **** }
+  75:util.c        **** 
+  76:util.c        **** /*
+  77:util.c        ****     Initialise motor. Starts UART and PWN and prints options.
+  78:util.c        **** */
+  79:util.c        **** void init()
+  80:util.c        **** {
+ 159              		.loc 1 80 0
+ 160              		.cfi_startproc
+ 161              		@ args = 0, pretend = 0, frame = 0
+ 162              		@ frame_needed = 0, uses_anonymous_args = 0
+ 163 0000 08B5     		push	{r3, lr}
+ 164              		.cfi_def_cfa_offset 8
+ 165              		.cfi_offset 3, -8
+ 166              		.cfi_offset 14, -4
+  81:util.c        ****     UART_1_Start();
+ 167              		.loc 1 81 0
+ 168 0002 FFF7FEFF 		bl	UART_1_Start
+ 169              	.LVL18:
+  82:util.c        ****     PWM_1_Start();    
+ 170              		.loc 1 82 0
+ 171 0006 FFF7FEFF 		bl	PWM_1_Start
+ 172              	.LVL19:
+  83:util.c        ****     UART_1_PutString("DC-Motor-PWM application started\r\n");
+ 173              		.loc 1 83 0
+ 174 000a 0348     		ldr	r0, .L17
+ 175 000c FFF7FEFF 		bl	UART_1_PutString
+ 176              	.LVL20:
+  84:util.c        ****     print_help();
+ 177              		.loc 1 84 0
+ 178 0010 FFF7FEFF 		bl	print_help
+ 179              	.LVL21:
+ 180 0014 08BD     		pop	{r3, pc}
+ 181              	.L18:
+ 182 0016 00BF     		.align	2
+ 183              	.L17:
+ 184 0018 74000000 		.word	.LC6
+ 185              		.cfi_endproc
+ 186              	.LFE65:
+ 187              		.size	init, .-init
+ 188              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 189              		.align	2
+ 190              	.LC0:
+ 191 0000 303A2053 		.ascii	"0: Stop\015\012\000"
+ 191      746F700D 
+ 191      0A00
+ 192 000a 0000     		.space	2
+ 193              	.LC1:
+ 194 000c 313A2044 		.ascii	"1: Drive forwards\015\012\000"
+ 194      72697665 
+ 194      20666F72 
+ 194      77617264 
+ 194      730D0A00 
+ 195              	.LC2:
+ARM GAS  C:\Users\au485450\AppData\Local\Temp\ccuszgGJ.s 			page 6
+
+
+ 196 0020 323A2044 		.ascii	"2: Drive backwards\015\012\000"
+ 196      72697665 
+ 196      20626163 
+ 196      6B776172 
+ 196      64730D0A 
+ 197 0035 000000   		.space	3
+ 198              	.LC3:
+ 199 0038 713A2044 		.ascii	"q: Decrease speed\015\012\000"
+ 199      65637265 
+ 199      61736520 
+ 199      73706565 
+ 199      640D0A00 
+ 200              	.LC4:
+ 201 004c 773A2049 		.ascii	"w: Increase speed\015\012\000"
+ 201      6E637265 
+ 201      61736520 
+ 201      73706565 
+ 201      640D0A00 
+ 202              	.LC5:
+ 203 0060 683A2053 		.ascii	"h: Show options\015\012\000"
+ 203      686F7720 
+ 203      6F707469 
+ 203      6F6E730D 
+ 203      0A00
+ 204 0072 0000     		.space	2
+ 205              	.LC6:
+ 206 0074 44432D4D 		.ascii	"DC-Motor-PWM application started\015\012\000"
+ 206      6F746F72 
+ 206      2D50574D 
+ 206      20617070 
+ 206      6C696361 
+ 207              		.text
+ 208              	.Letext0:
+ 209              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 210              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 211              		.file 4 "Generated_Source\\PSoC5/UART_1.h"
+ 212              		.file 5 "controls.h"
+ 213              		.file 6 "Generated_Source\\PSoC5/PWM_1.h"
+ 214              		.file 7 "Generated_Source\\PSoC5/core_cm3.h"
+ 215              		.section	.debug_info,"",%progbits
+ 216              	.Ldebug_info0:
+ 217 0000 5F020000 		.4byte	0x25f
+ 218 0004 0400     		.2byte	0x4
+ 219 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 220 000a 04       		.byte	0x4
+ 221 000b 01       		.uleb128 0x1
+ 222 000c B4000000 		.4byte	.LASF28
+ 223 0010 0C       		.byte	0xc
+ 224 0011 2F000000 		.4byte	.LASF29
+ 225 0015 57000000 		.4byte	.LASF30
+ 226 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 227 001d 00000000 		.4byte	0
+ 228 0021 00000000 		.4byte	.Ldebug_line0
+ 229 0025 02       		.uleb128 0x2
+ 230 0026 01       		.byte	0x1
+ 231 0027 06       		.byte	0x6
+ 232 0028 23020000 		.4byte	.LASF0
+ARM GAS  C:\Users\au485450\AppData\Local\Temp\ccuszgGJ.s 			page 7
+
+
+ 233 002c 03       		.uleb128 0x3
+ 234 002d 1B000000 		.4byte	.LASF4
+ 235 0031 02       		.byte	0x2
+ 236 0032 1D       		.byte	0x1d
+ 237 0033 37000000 		.4byte	0x37
+ 238 0037 02       		.uleb128 0x2
+ 239 0038 01       		.byte	0x1
+ 240 0039 08       		.byte	0x8
+ 241 003a A6000000 		.4byte	.LASF1
+ 242 003e 02       		.uleb128 0x2
+ 243 003f 02       		.byte	0x2
+ 244 0040 05       		.byte	0x5
+ 245 0041 04020000 		.4byte	.LASF2
+ 246 0045 02       		.uleb128 0x2
+ 247 0046 02       		.byte	0x2
+ 248 0047 07       		.byte	0x7
+ 249 0048 44000000 		.4byte	.LASF3
+ 250 004c 03       		.uleb128 0x3
+ 251 004d 25000000 		.4byte	.LASF5
+ 252 0051 02       		.byte	0x2
+ 253 0052 3F       		.byte	0x3f
+ 254 0053 57000000 		.4byte	0x57
+ 255 0057 02       		.uleb128 0x2
+ 256 0058 04       		.byte	0x4
+ 257 0059 05       		.byte	0x5
+ 258 005a 0E020000 		.4byte	.LASF6
+ 259 005e 02       		.uleb128 0x2
+ 260 005f 04       		.byte	0x4
+ 261 0060 07       		.byte	0x7
+ 262 0061 42010000 		.4byte	.LASF7
+ 263 0065 02       		.uleb128 0x2
+ 264 0066 08       		.byte	0x8
+ 265 0067 05       		.byte	0x5
+ 266 0068 00000000 		.4byte	.LASF8
+ 267 006c 02       		.uleb128 0x2
+ 268 006d 08       		.byte	0x8
+ 269 006e 07       		.byte	0x7
+ 270 006f A7010000 		.4byte	.LASF9
+ 271 0073 04       		.uleb128 0x4
+ 272 0074 04       		.byte	0x4
+ 273 0075 05       		.byte	0x5
+ 274 0076 696E7400 		.ascii	"int\000"
+ 275 007a 02       		.uleb128 0x2
+ 276 007b 04       		.byte	0x4
+ 277 007c 07       		.byte	0x7
+ 278 007d 8C010000 		.4byte	.LASF10
+ 279 0081 03       		.uleb128 0x3
+ 280 0082 BE010000 		.4byte	.LASF11
+ 281 0086 03       		.byte	0x3
+ 282 0087 18       		.byte	0x18
+ 283 0088 2C000000 		.4byte	0x2c
+ 284 008c 03       		.uleb128 0x3
+ 285 008d C6010000 		.4byte	.LASF12
+ 286 0091 03       		.byte	0x3
+ 287 0092 2C       		.byte	0x2c
+ 288 0093 4C000000 		.4byte	0x4c
+ 289 0097 02       		.uleb128 0x2
+ARM GAS  C:\Users\au485450\AppData\Local\Temp\ccuszgGJ.s 			page 8
+
+
+ 290 0098 04       		.byte	0x4
+ 291 0099 04       		.byte	0x4
+ 292 009a A0000000 		.4byte	.LASF13
+ 293 009e 02       		.uleb128 0x2
+ 294 009f 08       		.byte	0x8
+ 295 00a0 04       		.byte	0x4
+ 296 00a1 72010000 		.4byte	.LASF14
+ 297 00a5 02       		.uleb128 0x2
+ 298 00a6 01       		.byte	0x1
+ 299 00a7 08       		.byte	0x8
+ 300 00a8 F1010000 		.4byte	.LASF15
+ 301 00ac 02       		.uleb128 0x2
+ 302 00ad 08       		.byte	0x8
+ 303 00ae 04       		.byte	0x4
+ 304 00af 17020000 		.4byte	.LASF16
+ 305 00b3 02       		.uleb128 0x2
+ 306 00b4 04       		.byte	0x4
+ 307 00b5 07       		.byte	0x7
+ 308 00b6 DD010000 		.4byte	.LASF17
+ 309 00ba 05       		.uleb128 0x5
+ 310 00bb E6010000 		.4byte	.LASF18
+ 311 00bf 01       		.byte	0x1
+ 312 00c0 13       		.byte	0x13
+ 313 00c1 00000000 		.4byte	.LFB63
+ 314 00c5 40000000 		.4byte	.LFE63-.LFB63
+ 315 00c9 01       		.uleb128 0x1
+ 316 00ca 9C       		.byte	0x9c
+ 317 00cb 56010000 		.4byte	0x156
+ 318 00cf 06       		.uleb128 0x6
+ 319 00d0 08000000 		.4byte	.LVL0
+ 320 00d4 0A020000 		.4byte	0x20a
+ 321 00d8 E6000000 		.4byte	0xe6
+ 322 00dc 07       		.uleb128 0x7
+ 323 00dd 01       		.uleb128 0x1
+ 324 00de 50       		.byte	0x50
+ 325 00df 05       		.uleb128 0x5
+ 326 00e0 03       		.byte	0x3
+ 327 00e1 00000000 		.4byte	.LC0
+ 328 00e5 00       		.byte	0
+ 329 00e6 06       		.uleb128 0x6
+ 330 00e7 0E000000 		.4byte	.LVL1
+ 331 00eb 0A020000 		.4byte	0x20a
+ 332 00ef FD000000 		.4byte	0xfd
+ 333 00f3 07       		.uleb128 0x7
+ 334 00f4 01       		.uleb128 0x1
+ 335 00f5 50       		.byte	0x50
+ 336 00f6 05       		.uleb128 0x5
+ 337 00f7 03       		.byte	0x3
+ 338 00f8 0C000000 		.4byte	.LC1
+ 339 00fc 00       		.byte	0
+ 340 00fd 06       		.uleb128 0x6
+ 341 00fe 14000000 		.4byte	.LVL2
+ 342 0102 0A020000 		.4byte	0x20a
+ 343 0106 14010000 		.4byte	0x114
+ 344 010a 07       		.uleb128 0x7
+ 345 010b 01       		.uleb128 0x1
+ 346 010c 50       		.byte	0x50
+ARM GAS  C:\Users\au485450\AppData\Local\Temp\ccuszgGJ.s 			page 9
+
+
+ 347 010d 05       		.uleb128 0x5
+ 348 010e 03       		.byte	0x3
+ 349 010f 20000000 		.4byte	.LC2
+ 350 0113 00       		.byte	0
+ 351 0114 06       		.uleb128 0x6
+ 352 0115 1A000000 		.4byte	.LVL3
+ 353 0119 0A020000 		.4byte	0x20a
+ 354 011d 2B010000 		.4byte	0x12b
+ 355 0121 07       		.uleb128 0x7
+ 356 0122 01       		.uleb128 0x1
+ 357 0123 50       		.byte	0x50
+ 358 0124 05       		.uleb128 0x5
+ 359 0125 03       		.byte	0x3
+ 360 0126 38000000 		.4byte	.LC3
+ 361 012a 00       		.byte	0
+ 362 012b 06       		.uleb128 0x6
+ 363 012c 20000000 		.4byte	.LVL4
+ 364 0130 0A020000 		.4byte	0x20a
+ 365 0134 42010000 		.4byte	0x142
+ 366 0138 07       		.uleb128 0x7
+ 367 0139 01       		.uleb128 0x1
+ 368 013a 50       		.byte	0x50
+ 369 013b 05       		.uleb128 0x5
+ 370 013c 03       		.byte	0x3
+ 371 013d 4C000000 		.4byte	.LC4
+ 372 0141 00       		.byte	0
+ 373 0142 08       		.uleb128 0x8
+ 374 0143 26000000 		.4byte	.LVL5
+ 375 0147 0A020000 		.4byte	0x20a
+ 376 014b 07       		.uleb128 0x7
+ 377 014c 01       		.uleb128 0x1
+ 378 014d 50       		.byte	0x50
+ 379 014e 05       		.uleb128 0x5
+ 380 014f 03       		.byte	0x3
+ 381 0150 60000000 		.4byte	.LC5
+ 382 0154 00       		.byte	0
+ 383 0155 00       		.byte	0
+ 384 0156 09       		.uleb128 0x9
+ 385 0157 79010000 		.4byte	.LASF31
+ 386 015b 01       		.byte	0x1
+ 387 015c 21       		.byte	0x21
+ 388 015d 00000000 		.4byte	.LFB64
+ 389 0161 44000000 		.4byte	.LFE64-.LFB64
+ 390 0165 01       		.uleb128 0x1
+ 391 0166 9C       		.byte	0x9c
+ 392 0167 B1010000 		.4byte	0x1b1
+ 393 016b 0A       		.uleb128 0xa
+ 394 016c 40020000 		.4byte	.LASF32
+ 395 0170 01       		.byte	0x1
+ 396 0171 21       		.byte	0x21
+ 397 0172 81000000 		.4byte	0x81
+ 398 0176 00000000 		.4byte	.LLST0
+ 399 017a 0B       		.uleb128 0xb
+ 400 017b 24000000 		.4byte	.LVL7
+ 401 017f 15020000 		.4byte	0x215
+ 402 0183 0B       		.uleb128 0xb
+ 403 0184 2A000000 		.4byte	.LVL9
+ARM GAS  C:\Users\au485450\AppData\Local\Temp\ccuszgGJ.s 			page 10
+
+
+ 404 0188 20020000 		.4byte	0x220
+ 405 018c 0B       		.uleb128 0xb
+ 406 018d 30000000 		.4byte	.LVL11
+ 407 0191 BA000000 		.4byte	0xba
+ 408 0195 0B       		.uleb128 0xb
+ 409 0196 36000000 		.4byte	.LVL13
+ 410 019a 2B020000 		.4byte	0x22b
+ 411 019e 0B       		.uleb128 0xb
+ 412 019f 3C000000 		.4byte	.LVL15
+ 413 01a3 36020000 		.4byte	0x236
+ 414 01a7 0B       		.uleb128 0xb
+ 415 01a8 42000000 		.4byte	.LVL17
+ 416 01ac 41020000 		.4byte	0x241
+ 417 01b0 00       		.byte	0
+ 418 01b1 05       		.uleb128 0x5
+ 419 01b2 9B000000 		.4byte	.LASF19
+ 420 01b6 01       		.byte	0x1
+ 421 01b7 4F       		.byte	0x4f
+ 422 01b8 00000000 		.4byte	.LFB65
+ 423 01bc 1C000000 		.4byte	.LFE65-.LFB65
+ 424 01c0 01       		.uleb128 0x1
+ 425 01c1 9C       		.byte	0x9c
+ 426 01c2 F9010000 		.4byte	0x1f9
+ 427 01c6 0B       		.uleb128 0xb
+ 428 01c7 06000000 		.4byte	.LVL18
+ 429 01cb 4C020000 		.4byte	0x24c
+ 430 01cf 0B       		.uleb128 0xb
+ 431 01d0 0A000000 		.4byte	.LVL19
+ 432 01d4 57020000 		.4byte	0x257
+ 433 01d8 06       		.uleb128 0x6
+ 434 01d9 10000000 		.4byte	.LVL20
+ 435 01dd 0A020000 		.4byte	0x20a
+ 436 01e1 EF010000 		.4byte	0x1ef
+ 437 01e5 07       		.uleb128 0x7
+ 438 01e6 01       		.uleb128 0x1
+ 439 01e7 50       		.byte	0x50
+ 440 01e8 05       		.uleb128 0x5
+ 441 01e9 03       		.byte	0x3
+ 442 01ea 74000000 		.4byte	.LC6
+ 443 01ee 00       		.byte	0
+ 444 01ef 0B       		.uleb128 0xb
+ 445 01f0 14000000 		.4byte	.LVL21
+ 446 01f4 BA000000 		.4byte	0xba
+ 447 01f8 00       		.byte	0
+ 448 01f9 0C       		.uleb128 0xc
+ 449 01fa 65010000 		.4byte	.LASF33
+ 450 01fe 07       		.byte	0x7
+ 451 01ff 9606     		.2byte	0x696
+ 452 0201 05020000 		.4byte	0x205
+ 453 0205 0D       		.uleb128 0xd
+ 454 0206 8C000000 		.4byte	0x8c
+ 455 020a 0E       		.uleb128 0xe
+ 456 020b 2F020000 		.4byte	.LASF20
+ 457 020f 2F020000 		.4byte	.LASF20
+ 458 0213 04       		.byte	0x4
+ 459 0214 8B       		.byte	0x8b
+ 460 0215 0E       		.uleb128 0xe
+ARM GAS  C:\Users\au485450\AppData\Local\Temp\ccuszgGJ.s 			page 11
+
+
+ 461 0216 F6010000 		.4byte	.LASF21
+ 462 021a F6010000 		.4byte	.LASF21
+ 463 021e 05       		.byte	0x5
+ 464 021f 12       		.byte	0x12
+ 465 0220 0E       		.uleb128 0xe
+ 466 0221 36000000 		.4byte	.LASF22
+ 467 0225 36000000 		.4byte	.LASF22
+ 468 0229 05       		.byte	0x5
+ 469 022a 13       		.byte	0x13
+ 470 022b 0E       		.uleb128 0xe
+ 471 022c 99010000 		.4byte	.LASF23
+ 472 0230 99010000 		.4byte	.LASF23
+ 473 0234 05       		.byte	0x5
+ 474 0235 14       		.byte	0x14
+ 475 0236 0E       		.uleb128 0xe
+ 476 0237 CE010000 		.4byte	.LASF24
+ 477 023b CE010000 		.4byte	.LASF24
+ 478 023f 05       		.byte	0x5
+ 479 0240 15       		.byte	0x15
+ 480 0241 0E       		.uleb128 0xe
+ 481 0242 60010000 		.4byte	.LASF25
+ 482 0246 60010000 		.4byte	.LASF25
+ 483 024a 05       		.byte	0x5
+ 484 024b 16       		.byte	0x16
+ 485 024c 0E       		.uleb128 0xe
+ 486 024d 0E000000 		.4byte	.LASF26
+ 487 0251 0E000000 		.4byte	.LASF26
+ 488 0255 04       		.byte	0x4
+ 489 0256 54       		.byte	0x54
+ 490 0257 0E       		.uleb128 0xe
+ 491 0258 54010000 		.4byte	.LASF27
+ 492 025c 54010000 		.4byte	.LASF27
+ 493 0260 06       		.byte	0x6
+ 494 0261 92       		.byte	0x92
+ 495 0262 00       		.byte	0
+ 496              		.section	.debug_abbrev,"",%progbits
+ 497              	.Ldebug_abbrev0:
+ 498 0000 01       		.uleb128 0x1
+ 499 0001 11       		.uleb128 0x11
+ 500 0002 01       		.byte	0x1
+ 501 0003 25       		.uleb128 0x25
+ 502 0004 0E       		.uleb128 0xe
+ 503 0005 13       		.uleb128 0x13
+ 504 0006 0B       		.uleb128 0xb
+ 505 0007 03       		.uleb128 0x3
+ 506 0008 0E       		.uleb128 0xe
+ 507 0009 1B       		.uleb128 0x1b
+ 508 000a 0E       		.uleb128 0xe
+ 509 000b 55       		.uleb128 0x55
+ 510 000c 17       		.uleb128 0x17
+ 511 000d 11       		.uleb128 0x11
+ 512 000e 01       		.uleb128 0x1
+ 513 000f 10       		.uleb128 0x10
+ 514 0010 17       		.uleb128 0x17
+ 515 0011 00       		.byte	0
+ 516 0012 00       		.byte	0
+ 517 0013 02       		.uleb128 0x2
+ARM GAS  C:\Users\au485450\AppData\Local\Temp\ccuszgGJ.s 			page 12
+
+
+ 518 0014 24       		.uleb128 0x24
+ 519 0015 00       		.byte	0
+ 520 0016 0B       		.uleb128 0xb
+ 521 0017 0B       		.uleb128 0xb
+ 522 0018 3E       		.uleb128 0x3e
+ 523 0019 0B       		.uleb128 0xb
+ 524 001a 03       		.uleb128 0x3
+ 525 001b 0E       		.uleb128 0xe
+ 526 001c 00       		.byte	0
+ 527 001d 00       		.byte	0
+ 528 001e 03       		.uleb128 0x3
+ 529 001f 16       		.uleb128 0x16
+ 530 0020 00       		.byte	0
+ 531 0021 03       		.uleb128 0x3
+ 532 0022 0E       		.uleb128 0xe
+ 533 0023 3A       		.uleb128 0x3a
+ 534 0024 0B       		.uleb128 0xb
+ 535 0025 3B       		.uleb128 0x3b
+ 536 0026 0B       		.uleb128 0xb
+ 537 0027 49       		.uleb128 0x49
+ 538 0028 13       		.uleb128 0x13
+ 539 0029 00       		.byte	0
+ 540 002a 00       		.byte	0
+ 541 002b 04       		.uleb128 0x4
+ 542 002c 24       		.uleb128 0x24
+ 543 002d 00       		.byte	0
+ 544 002e 0B       		.uleb128 0xb
+ 545 002f 0B       		.uleb128 0xb
+ 546 0030 3E       		.uleb128 0x3e
+ 547 0031 0B       		.uleb128 0xb
+ 548 0032 03       		.uleb128 0x3
+ 549 0033 08       		.uleb128 0x8
+ 550 0034 00       		.byte	0
+ 551 0035 00       		.byte	0
+ 552 0036 05       		.uleb128 0x5
+ 553 0037 2E       		.uleb128 0x2e
+ 554 0038 01       		.byte	0x1
+ 555 0039 3F       		.uleb128 0x3f
+ 556 003a 19       		.uleb128 0x19
+ 557 003b 03       		.uleb128 0x3
+ 558 003c 0E       		.uleb128 0xe
+ 559 003d 3A       		.uleb128 0x3a
+ 560 003e 0B       		.uleb128 0xb
+ 561 003f 3B       		.uleb128 0x3b
+ 562 0040 0B       		.uleb128 0xb
+ 563 0041 11       		.uleb128 0x11
+ 564 0042 01       		.uleb128 0x1
+ 565 0043 12       		.uleb128 0x12
+ 566 0044 06       		.uleb128 0x6
+ 567 0045 40       		.uleb128 0x40
+ 568 0046 18       		.uleb128 0x18
+ 569 0047 9742     		.uleb128 0x2117
+ 570 0049 19       		.uleb128 0x19
+ 571 004a 01       		.uleb128 0x1
+ 572 004b 13       		.uleb128 0x13
+ 573 004c 00       		.byte	0
+ 574 004d 00       		.byte	0
+ARM GAS  C:\Users\au485450\AppData\Local\Temp\ccuszgGJ.s 			page 13
+
+
+ 575 004e 06       		.uleb128 0x6
+ 576 004f 898201   		.uleb128 0x4109
+ 577 0052 01       		.byte	0x1
+ 578 0053 11       		.uleb128 0x11
+ 579 0054 01       		.uleb128 0x1
+ 580 0055 31       		.uleb128 0x31
+ 581 0056 13       		.uleb128 0x13
+ 582 0057 01       		.uleb128 0x1
+ 583 0058 13       		.uleb128 0x13
+ 584 0059 00       		.byte	0
+ 585 005a 00       		.byte	0
+ 586 005b 07       		.uleb128 0x7
+ 587 005c 8A8201   		.uleb128 0x410a
+ 588 005f 00       		.byte	0
+ 589 0060 02       		.uleb128 0x2
+ 590 0061 18       		.uleb128 0x18
+ 591 0062 9142     		.uleb128 0x2111
+ 592 0064 18       		.uleb128 0x18
+ 593 0065 00       		.byte	0
+ 594 0066 00       		.byte	0
+ 595 0067 08       		.uleb128 0x8
+ 596 0068 898201   		.uleb128 0x4109
+ 597 006b 01       		.byte	0x1
+ 598 006c 11       		.uleb128 0x11
+ 599 006d 01       		.uleb128 0x1
+ 600 006e 31       		.uleb128 0x31
+ 601 006f 13       		.uleb128 0x13
+ 602 0070 00       		.byte	0
+ 603 0071 00       		.byte	0
+ 604 0072 09       		.uleb128 0x9
+ 605 0073 2E       		.uleb128 0x2e
+ 606 0074 01       		.byte	0x1
+ 607 0075 3F       		.uleb128 0x3f
+ 608 0076 19       		.uleb128 0x19
+ 609 0077 03       		.uleb128 0x3
+ 610 0078 0E       		.uleb128 0xe
+ 611 0079 3A       		.uleb128 0x3a
+ 612 007a 0B       		.uleb128 0xb
+ 613 007b 3B       		.uleb128 0x3b
+ 614 007c 0B       		.uleb128 0xb
+ 615 007d 27       		.uleb128 0x27
+ 616 007e 19       		.uleb128 0x19
+ 617 007f 11       		.uleb128 0x11
+ 618 0080 01       		.uleb128 0x1
+ 619 0081 12       		.uleb128 0x12
+ 620 0082 06       		.uleb128 0x6
+ 621 0083 40       		.uleb128 0x40
+ 622 0084 18       		.uleb128 0x18
+ 623 0085 9742     		.uleb128 0x2117
+ 624 0087 19       		.uleb128 0x19
+ 625 0088 01       		.uleb128 0x1
+ 626 0089 13       		.uleb128 0x13
+ 627 008a 00       		.byte	0
+ 628 008b 00       		.byte	0
+ 629 008c 0A       		.uleb128 0xa
+ 630 008d 05       		.uleb128 0x5
+ 631 008e 00       		.byte	0
+ARM GAS  C:\Users\au485450\AppData\Local\Temp\ccuszgGJ.s 			page 14
+
+
+ 632 008f 03       		.uleb128 0x3
+ 633 0090 0E       		.uleb128 0xe
+ 634 0091 3A       		.uleb128 0x3a
+ 635 0092 0B       		.uleb128 0xb
+ 636 0093 3B       		.uleb128 0x3b
+ 637 0094 0B       		.uleb128 0xb
+ 638 0095 49       		.uleb128 0x49
+ 639 0096 13       		.uleb128 0x13
+ 640 0097 02       		.uleb128 0x2
+ 641 0098 17       		.uleb128 0x17
+ 642 0099 00       		.byte	0
+ 643 009a 00       		.byte	0
+ 644 009b 0B       		.uleb128 0xb
+ 645 009c 898201   		.uleb128 0x4109
+ 646 009f 00       		.byte	0
+ 647 00a0 11       		.uleb128 0x11
+ 648 00a1 01       		.uleb128 0x1
+ 649 00a2 31       		.uleb128 0x31
+ 650 00a3 13       		.uleb128 0x13
+ 651 00a4 00       		.byte	0
+ 652 00a5 00       		.byte	0
+ 653 00a6 0C       		.uleb128 0xc
+ 654 00a7 34       		.uleb128 0x34
+ 655 00a8 00       		.byte	0
+ 656 00a9 03       		.uleb128 0x3
+ 657 00aa 0E       		.uleb128 0xe
+ 658 00ab 3A       		.uleb128 0x3a
+ 659 00ac 0B       		.uleb128 0xb
+ 660 00ad 3B       		.uleb128 0x3b
+ 661 00ae 05       		.uleb128 0x5
+ 662 00af 49       		.uleb128 0x49
+ 663 00b0 13       		.uleb128 0x13
+ 664 00b1 3F       		.uleb128 0x3f
+ 665 00b2 19       		.uleb128 0x19
+ 666 00b3 3C       		.uleb128 0x3c
+ 667 00b4 19       		.uleb128 0x19
+ 668 00b5 00       		.byte	0
+ 669 00b6 00       		.byte	0
+ 670 00b7 0D       		.uleb128 0xd
+ 671 00b8 35       		.uleb128 0x35
+ 672 00b9 00       		.byte	0
+ 673 00ba 49       		.uleb128 0x49
+ 674 00bb 13       		.uleb128 0x13
+ 675 00bc 00       		.byte	0
+ 676 00bd 00       		.byte	0
+ 677 00be 0E       		.uleb128 0xe
+ 678 00bf 2E       		.uleb128 0x2e
+ 679 00c0 00       		.byte	0
+ 680 00c1 3F       		.uleb128 0x3f
+ 681 00c2 19       		.uleb128 0x19
+ 682 00c3 3C       		.uleb128 0x3c
+ 683 00c4 19       		.uleb128 0x19
+ 684 00c5 6E       		.uleb128 0x6e
+ 685 00c6 0E       		.uleb128 0xe
+ 686 00c7 03       		.uleb128 0x3
+ 687 00c8 0E       		.uleb128 0xe
+ 688 00c9 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\au485450\AppData\Local\Temp\ccuszgGJ.s 			page 15
+
+
+ 689 00ca 0B       		.uleb128 0xb
+ 690 00cb 3B       		.uleb128 0x3b
+ 691 00cc 0B       		.uleb128 0xb
+ 692 00cd 00       		.byte	0
+ 693 00ce 00       		.byte	0
+ 694 00cf 00       		.byte	0
+ 695              		.section	.debug_loc,"",%progbits
+ 696              	.Ldebug_loc0:
+ 697              	.LLST0:
+ 698 0000 00000000 		.4byte	.LVL6
+ 699 0004 23000000 		.4byte	.LVL7-1
+ 700 0008 0100     		.2byte	0x1
+ 701 000a 50       		.byte	0x50
+ 702 000b 23000000 		.4byte	.LVL7-1
+ 703 000f 26000000 		.4byte	.LVL8
+ 704 0013 0400     		.2byte	0x4
+ 705 0015 F3       		.byte	0xf3
+ 706 0016 01       		.uleb128 0x1
+ 707 0017 50       		.byte	0x50
+ 708 0018 9F       		.byte	0x9f
+ 709 0019 26000000 		.4byte	.LVL8
+ 710 001d 29000000 		.4byte	.LVL9-1
+ 711 0021 0100     		.2byte	0x1
+ 712 0023 50       		.byte	0x50
+ 713 0024 29000000 		.4byte	.LVL9-1
+ 714 0028 2C000000 		.4byte	.LVL10
+ 715 002c 0400     		.2byte	0x4
+ 716 002e F3       		.byte	0xf3
+ 717 002f 01       		.uleb128 0x1
+ 718 0030 50       		.byte	0x50
+ 719 0031 9F       		.byte	0x9f
+ 720 0032 2C000000 		.4byte	.LVL10
+ 721 0036 2F000000 		.4byte	.LVL11-1
+ 722 003a 0100     		.2byte	0x1
+ 723 003c 50       		.byte	0x50
+ 724 003d 2F000000 		.4byte	.LVL11-1
+ 725 0041 32000000 		.4byte	.LVL12
+ 726 0045 0400     		.2byte	0x4
+ 727 0047 F3       		.byte	0xf3
+ 728 0048 01       		.uleb128 0x1
+ 729 0049 50       		.byte	0x50
+ 730 004a 9F       		.byte	0x9f
+ 731 004b 32000000 		.4byte	.LVL12
+ 732 004f 35000000 		.4byte	.LVL13-1
+ 733 0053 0100     		.2byte	0x1
+ 734 0055 50       		.byte	0x50
+ 735 0056 35000000 		.4byte	.LVL13-1
+ 736 005a 38000000 		.4byte	.LVL14
+ 737 005e 0400     		.2byte	0x4
+ 738 0060 F3       		.byte	0xf3
+ 739 0061 01       		.uleb128 0x1
+ 740 0062 50       		.byte	0x50
+ 741 0063 9F       		.byte	0x9f
+ 742 0064 38000000 		.4byte	.LVL14
+ 743 0068 3B000000 		.4byte	.LVL15-1
+ 744 006c 0100     		.2byte	0x1
+ 745 006e 50       		.byte	0x50
+ARM GAS  C:\Users\au485450\AppData\Local\Temp\ccuszgGJ.s 			page 16
+
+
+ 746 006f 3B000000 		.4byte	.LVL15-1
+ 747 0073 3E000000 		.4byte	.LVL16
+ 748 0077 0400     		.2byte	0x4
+ 749 0079 F3       		.byte	0xf3
+ 750 007a 01       		.uleb128 0x1
+ 751 007b 50       		.byte	0x50
+ 752 007c 9F       		.byte	0x9f
+ 753 007d 3E000000 		.4byte	.LVL16
+ 754 0081 41000000 		.4byte	.LVL17-1
+ 755 0085 0100     		.2byte	0x1
+ 756 0087 50       		.byte	0x50
+ 757 0088 41000000 		.4byte	.LVL17-1
+ 758 008c 44000000 		.4byte	.LFE64
+ 759 0090 0400     		.2byte	0x4
+ 760 0092 F3       		.byte	0xf3
+ 761 0093 01       		.uleb128 0x1
+ 762 0094 50       		.byte	0x50
+ 763 0095 9F       		.byte	0x9f
+ 764 0096 00000000 		.4byte	0
+ 765 009a 00000000 		.4byte	0
+ 766              		.section	.debug_aranges,"",%progbits
+ 767 0000 2C000000 		.4byte	0x2c
+ 768 0004 0200     		.2byte	0x2
+ 769 0006 00000000 		.4byte	.Ldebug_info0
+ 770 000a 04       		.byte	0x4
+ 771 000b 00       		.byte	0
+ 772 000c 0000     		.2byte	0
+ 773 000e 0000     		.2byte	0
+ 774 0010 00000000 		.4byte	.LFB63
+ 775 0014 40000000 		.4byte	.LFE63-.LFB63
+ 776 0018 00000000 		.4byte	.LFB64
+ 777 001c 44000000 		.4byte	.LFE64-.LFB64
+ 778 0020 00000000 		.4byte	.LFB65
+ 779 0024 1C000000 		.4byte	.LFE65-.LFB65
+ 780 0028 00000000 		.4byte	0
+ 781 002c 00000000 		.4byte	0
+ 782              		.section	.debug_ranges,"",%progbits
+ 783              	.Ldebug_ranges0:
+ 784 0000 00000000 		.4byte	.LFB63
+ 785 0004 40000000 		.4byte	.LFE63
+ 786 0008 00000000 		.4byte	.LFB64
+ 787 000c 44000000 		.4byte	.LFE64
+ 788 0010 00000000 		.4byte	.LFB65
+ 789 0014 1C000000 		.4byte	.LFE65
+ 790 0018 00000000 		.4byte	0
+ 791 001c 00000000 		.4byte	0
+ 792              		.section	.debug_line,"",%progbits
+ 793              	.Ldebug_line0:
+ 794 0000 AE010000 		.section	.debug_str,"MS",%progbits,1
+ 794      02006401 
+ 794      00000201 
+ 794      FB0E0D00 
+ 794      01010101 
+ 795              	.LASF8:
+ 796 0000 6C6F6E67 		.ascii	"long long int\000"
+ 796      206C6F6E 
+ 796      6720696E 
+ARM GAS  C:\Users\au485450\AppData\Local\Temp\ccuszgGJ.s 			page 17
+
+
+ 796      7400
+ 797              	.LASF26:
+ 798 000e 55415254 		.ascii	"UART_1_Start\000"
+ 798      5F315F53 
+ 798      74617274 
+ 798      00
+ 799              	.LASF4:
+ 800 001b 5F5F7569 		.ascii	"__uint8_t\000"
+ 800      6E74385F 
+ 800      7400
+ 801              	.LASF5:
+ 802 0025 5F5F696E 		.ascii	"__int32_t\000"
+ 802      7433325F 
+ 802      7400
+ 803              	.LASF29:
+ 804 002f 7574696C 		.ascii	"util.c\000"
+ 804      2E6300
+ 805              	.LASF22:
+ 806 0036 696E6372 		.ascii	"increaseSpeed\000"
+ 806      65617365 
+ 806      53706565 
+ 806      6400
+ 807              	.LASF3:
+ 808 0044 73686F72 		.ascii	"short unsigned int\000"
+ 808      7420756E 
+ 808      7369676E 
+ 808      65642069 
+ 808      6E7400
+ 809              	.LASF30:
+ 810 0057 433A5C55 		.ascii	"C:\\Users\\au485450\\Uni_code\\2_semester\\New fold"
+ 810      73657273 
+ 810      5C617534 
+ 810      38353435 
+ 810      305C556E 
+ 811 0085 65725C44 		.ascii	"er\\DC-Motor-PWM.cydsn\000"
+ 811      432D4D6F 
+ 811      746F722D 
+ 811      50574D2E 
+ 811      63796473 
+ 812              	.LASF19:
+ 813 009b 696E6974 		.ascii	"init\000"
+ 813      00
+ 814              	.LASF13:
+ 815 00a0 666C6F61 		.ascii	"float\000"
+ 815      7400
+ 816              	.LASF1:
+ 817 00a6 756E7369 		.ascii	"unsigned char\000"
+ 817      676E6564 
+ 817      20636861 
+ 817      7200
+ 818              	.LASF28:
+ 819 00b4 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 819      43313120 
+ 819      352E342E 
+ 819      31203230 
+ 819      31363036 
+ 820 00e7 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ARM GAS  C:\Users\au485450\AppData\Local\Temp\ccuszgGJ.s 			page 18
+
+
+ 820      20726576 
+ 820      6973696F 
+ 820      6E203233 
+ 820      37373135 
+ 821 011a 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 821      66756E63 
+ 821      74696F6E 
+ 821      2D736563 
+ 821      74696F6E 
+ 822              	.LASF7:
+ 823 0142 6C6F6E67 		.ascii	"long unsigned int\000"
+ 823      20756E73 
+ 823      69676E65 
+ 823      6420696E 
+ 823      7400
+ 824              	.LASF27:
+ 825 0154 50574D5F 		.ascii	"PWM_1_Start\000"
+ 825      315F5374 
+ 825      61727400 
+ 826              	.LASF25:
+ 827 0160 73746F70 		.ascii	"stop\000"
+ 827      00
+ 828              	.LASF33:
+ 829 0165 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 829      52784275 
+ 829      66666572 
+ 829      00
+ 830              	.LASF14:
+ 831 0172 646F7562 		.ascii	"double\000"
+ 831      6C6500
+ 832              	.LASF31:
+ 833 0179 68616E64 		.ascii	"handleByteReceived\000"
+ 833      6C654279 
+ 833      74655265 
+ 833      63656976 
+ 833      656400
+ 834              	.LASF10:
+ 835 018c 756E7369 		.ascii	"unsigned int\000"
+ 835      676E6564 
+ 835      20696E74 
+ 835      00
+ 836              	.LASF23:
+ 837 0199 64726976 		.ascii	"driveForwards\000"
+ 837      65466F72 
+ 837      77617264 
+ 837      7300
+ 838              	.LASF9:
+ 839 01a7 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 839      206C6F6E 
+ 839      6720756E 
+ 839      7369676E 
+ 839      65642069 
+ 840              	.LASF11:
+ 841 01be 75696E74 		.ascii	"uint8_t\000"
+ 841      385F7400 
+ 842              	.LASF12:
+ 843 01c6 696E7433 		.ascii	"int32_t\000"
+ARM GAS  C:\Users\au485450\AppData\Local\Temp\ccuszgGJ.s 			page 19
+
+
+ 843      325F7400 
+ 844              	.LASF24:
+ 845 01ce 64726976 		.ascii	"driveBackwards\000"
+ 845      65426163 
+ 845      6B776172 
+ 845      647300
+ 846              	.LASF17:
+ 847 01dd 73697A65 		.ascii	"sizetype\000"
+ 847      74797065 
+ 847      00
+ 848              	.LASF18:
+ 849 01e6 7072696E 		.ascii	"print_help\000"
+ 849      745F6865 
+ 849      6C7000
+ 850              	.LASF15:
+ 851 01f1 63686172 		.ascii	"char\000"
+ 851      00
+ 852              	.LASF21:
+ 853 01f6 64656372 		.ascii	"decreaseSpeed\000"
+ 853      65617365 
+ 853      53706565 
+ 853      6400
+ 854              	.LASF2:
+ 855 0204 73686F72 		.ascii	"short int\000"
+ 855      7420696E 
+ 855      7400
+ 856              	.LASF6:
+ 857 020e 6C6F6E67 		.ascii	"long int\000"
+ 857      20696E74 
+ 857      00
+ 858              	.LASF16:
+ 859 0217 6C6F6E67 		.ascii	"long double\000"
+ 859      20646F75 
+ 859      626C6500 
+ 860              	.LASF0:
+ 861 0223 7369676E 		.ascii	"signed char\000"
+ 861      65642063 
+ 861      68617200 
+ 862              	.LASF20:
+ 863 022f 55415254 		.ascii	"UART_1_PutString\000"
+ 863      5F315F50 
+ 863      75745374 
+ 863      72696E67 
+ 863      00
+ 864              	.LASF32:
+ 865 0240 62797465 		.ascii	"byteReceived\000"
+ 865      52656365 
+ 865      69766564 
+ 865      00
+ 866              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

@@ -1,0 +1,802 @@
+ARM GAS  C:\Users\au485450\AppData\Local\Temp\ccoDUPLy.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.ISR_UART_rx_handler,"ax",%progbits
+  20              		.align	2
+  21              		.global	ISR_UART_rx_handler
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	ISR_UART_rx_handler, %function
+  25              	ISR_UART_rx_handler:
+  26              	.LFB65:
+  27              		.file 1 "main.c"
+   1:main.c        **** /* ========================================
+   2:main.c        ****  *
+   3:main.c        ****  * Copyright YOUR COMPANY, THE YEAR
+   4:main.c        ****  * All Rights Reserved
+   5:main.c        ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:main.c        ****  *
+   7:main.c        ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:main.c        ****  * WHICH IS THE PROPERTY OF your company.
+   9:main.c        ****  *
+  10:main.c        ****  * ========================================
+  11:main.c        **** */
+  12:main.c        **** #include "project.h"
+  13:main.c        **** #include <stdio.h>
+  14:main.c        **** #include "util.h"
+  15:main.c        **** #include "controls.h"
+  16:main.c        **** 
+  17:main.c        **** CY_ISR_PROTO(ISR_UART_rx_handler);
+  18:main.c        **** 
+  19:main.c        **** int main(void)
+  20:main.c        **** {
+  21:main.c        ****     CyGlobalIntEnable; /* Enable global interrupts. */
+  22:main.c        ****     isr_uart_rx_StartEx(ISR_UART_rx_handler);
+  23:main.c        ****     init();
+  24:main.c        **** 
+  25:main.c        ****     for(;;)
+  26:main.c        ****     {
+  27:main.c        ****     }
+  28:main.c        **** }
+  29:main.c        **** 
+  30:main.c        **** CY_ISR(ISR_UART_rx_handler)
+ARM GAS  C:\Users\au485450\AppData\Local\Temp\ccoDUPLy.s 			page 2
+
+
+  31:main.c        **** {
+  28              		.loc 1 31 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 10B5     		push	{r4, lr}
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 4, -8
+  35              		.cfi_offset 14, -4
+  32:main.c        ****     uint8_t bytesToRead = UART_1_GetRxBufferSize();
+  36              		.loc 1 32 0
+  37 0002 FFF7FEFF 		bl	UART_1_GetRxBufferSize
+  38              	.LVL0:
+  39 0006 0446     		mov	r4, r0
+  40              	.LVL1:
+  33:main.c        ****     while (bytesToRead > 0)
+  41              		.loc 1 33 0
+  42 0008 05E0     		b	.L2
+  43              	.L3:
+  44              	.LBB2:
+  34:main.c        ****     {
+  35:main.c        ****         uint8_t byteReceived = UART_1_ReadRxData();
+  45              		.loc 1 35 0
+  46 000a FFF7FEFF 		bl	UART_1_ReadRxData
+  47              	.LVL2:
+  36:main.c        ****         
+  37:main.c        ****         handleByteReceived(byteReceived);
+  48              		.loc 1 37 0
+  49 000e FFF7FEFF 		bl	handleByteReceived
+  50              	.LVL3:
+  38:main.c        ****         
+  39:main.c        ****         bytesToRead--;
+  51              		.loc 1 39 0
+  52 0012 013C     		subs	r4, r4, #1
+  53              	.LVL4:
+  54 0014 E4B2     		uxtb	r4, r4
+  55              	.LVL5:
+  56              	.L2:
+  57              	.LBE2:
+  33:main.c        ****     {
+  58              		.loc 1 33 0
+  59 0016 002C     		cmp	r4, #0
+  60 0018 F7D1     		bne	.L3
+  40:main.c        ****     }
+  41:main.c        **** }
+  61              		.loc 1 41 0
+  62 001a 10BD     		pop	{r4, pc}
+  63              		.cfi_endproc
+  64              	.LFE65:
+  65              		.size	ISR_UART_rx_handler, .-ISR_UART_rx_handler
+  66              		.section	.text.main,"ax",%progbits
+  67              		.align	2
+  68              		.global	main
+  69              		.thumb
+  70              		.thumb_func
+  71              		.type	main, %function
+  72              	main:
+ARM GAS  C:\Users\au485450\AppData\Local\Temp\ccoDUPLy.s 			page 3
+
+
+  73              	.LFB64:
+  20:main.c        ****     CyGlobalIntEnable; /* Enable global interrupts. */
+  74              		.loc 1 20 0
+  75              		.cfi_startproc
+  76              		@ Volatile: function does not return.
+  77              		@ args = 0, pretend = 0, frame = 0
+  78              		@ frame_needed = 0, uses_anonymous_args = 0
+  79 0000 08B5     		push	{r3, lr}
+  80              		.cfi_def_cfa_offset 8
+  81              		.cfi_offset 3, -8
+  82              		.cfi_offset 14, -4
+  21:main.c        ****     isr_uart_rx_StartEx(ISR_UART_rx_handler);
+  83              		.loc 1 21 0
+  84              		.syntax unified
+  85              	@ 21 "main.c" 1
+  86 0002 62B6     		CPSIE   i
+  87              	@ 0 "" 2
+  22:main.c        ****     init();
+  88              		.loc 1 22 0
+  89              		.thumb
+  90              		.syntax unified
+  91 0004 0248     		ldr	r0, .L8
+  92 0006 FFF7FEFF 		bl	isr_uart_rx_StartEx
+  93              	.LVL6:
+  23:main.c        **** 
+  94              		.loc 1 23 0
+  95 000a FFF7FEFF 		bl	init
+  96              	.LVL7:
+  97              	.L6:
+  98 000e FEE7     		b	.L6
+  99              	.L9:
+ 100              		.align	2
+ 101              	.L8:
+ 102 0010 00000000 		.word	ISR_UART_rx_handler
+ 103              		.cfi_endproc
+ 104              	.LFE64:
+ 105              		.size	main, .-main
+ 106              		.text
+ 107              	.Letext0:
+ 108              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 109              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 110              		.file 4 "Generated_Source\\PSoC5/UART_1.h"
+ 111              		.file 5 "util.h"
+ 112              		.file 6 "Generated_Source\\PSoC5/isr_uart_rx.h"
+ 113              		.file 7 "Generated_Source\\PSoC5/core_cm3.h"
+ 114              		.section	.debug_info,"",%progbits
+ 115              	.Ldebug_info0:
+ 116 0000 96010000 		.4byte	0x196
+ 117 0004 0400     		.2byte	0x4
+ 118 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 119 000a 04       		.byte	0x4
+ 120 000b 01       		.uleb128 0x1
+ 121 000c A4000000 		.4byte	.LASF25
+ 122 0010 0C       		.byte	0xc
+ 123 0011 F8010000 		.4byte	.LASF26
+ 124 0015 3B000000 		.4byte	.LASF27
+ 125 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ARM GAS  C:\Users\au485450\AppData\Local\Temp\ccoDUPLy.s 			page 4
+
+
+ 126 001d 00000000 		.4byte	0
+ 127 0021 00000000 		.4byte	.Ldebug_line0
+ 128 0025 02       		.uleb128 0x2
+ 129 0026 01       		.byte	0x1
+ 130 0027 06       		.byte	0x6
+ 131 0028 23020000 		.4byte	.LASF0
+ 132 002c 03       		.uleb128 0x3
+ 133 002d 14000000 		.4byte	.LASF4
+ 134 0031 02       		.byte	0x2
+ 135 0032 1D       		.byte	0x1d
+ 136 0033 37000000 		.4byte	0x37
+ 137 0037 02       		.uleb128 0x2
+ 138 0038 01       		.byte	0x1
+ 139 0039 08       		.byte	0x8
+ 140 003a 96000000 		.4byte	.LASF1
+ 141 003e 02       		.uleb128 0x2
+ 142 003f 02       		.byte	0x2
+ 143 0040 05       		.byte	0x5
+ 144 0041 04020000 		.4byte	.LASF2
+ 145 0045 02       		.uleb128 0x2
+ 146 0046 02       		.byte	0x2
+ 147 0047 07       		.byte	0x7
+ 148 0048 28000000 		.4byte	.LASF3
+ 149 004c 03       		.uleb128 0x3
+ 150 004d 1E000000 		.4byte	.LASF5
+ 151 0051 02       		.byte	0x2
+ 152 0052 3F       		.byte	0x3f
+ 153 0053 57000000 		.4byte	0x57
+ 154 0057 02       		.uleb128 0x2
+ 155 0058 04       		.byte	0x4
+ 156 0059 05       		.byte	0x5
+ 157 005a 0E020000 		.4byte	.LASF6
+ 158 005e 02       		.uleb128 0x2
+ 159 005f 04       		.byte	0x4
+ 160 0060 07       		.byte	0x7
+ 161 0061 46010000 		.4byte	.LASF7
+ 162 0065 02       		.uleb128 0x2
+ 163 0066 08       		.byte	0x8
+ 164 0067 05       		.byte	0x5
+ 165 0068 EA010000 		.4byte	.LASF8
+ 166 006c 02       		.uleb128 0x2
+ 167 006d 08       		.byte	0x8
+ 168 006e 07       		.byte	0x7
+ 169 006f A3010000 		.4byte	.LASF9
+ 170 0073 04       		.uleb128 0x4
+ 171 0074 04       		.byte	0x4
+ 172 0075 05       		.byte	0x5
+ 173 0076 696E7400 		.ascii	"int\000"
+ 174 007a 02       		.uleb128 0x2
+ 175 007b 04       		.byte	0x4
+ 176 007c 07       		.byte	0x7
+ 177 007d 96010000 		.4byte	.LASF10
+ 178 0081 03       		.uleb128 0x3
+ 179 0082 BA010000 		.4byte	.LASF11
+ 180 0086 03       		.byte	0x3
+ 181 0087 18       		.byte	0x18
+ 182 0088 2C000000 		.4byte	0x2c
+ARM GAS  C:\Users\au485450\AppData\Local\Temp\ccoDUPLy.s 			page 5
+
+
+ 183 008c 03       		.uleb128 0x3
+ 184 008d D9010000 		.4byte	.LASF12
+ 185 0091 03       		.byte	0x3
+ 186 0092 2C       		.byte	0x2c
+ 187 0093 4C000000 		.4byte	0x4c
+ 188 0097 02       		.uleb128 0x2
+ 189 0098 04       		.byte	0x4
+ 190 0099 04       		.byte	0x4
+ 191 009a 90000000 		.4byte	.LASF13
+ 192 009e 02       		.uleb128 0x2
+ 193 009f 08       		.byte	0x8
+ 194 00a0 04       		.byte	0x4
+ 195 00a1 8A010000 		.4byte	.LASF14
+ 196 00a5 02       		.uleb128 0x2
+ 197 00a6 01       		.byte	0x1
+ 198 00a7 08       		.byte	0x8
+ 199 00a8 FF010000 		.4byte	.LASF15
+ 200 00ac 02       		.uleb128 0x2
+ 201 00ad 08       		.byte	0x8
+ 202 00ae 04       		.byte	0x4
+ 203 00af 17020000 		.4byte	.LASF16
+ 204 00b3 02       		.uleb128 0x2
+ 205 00b4 04       		.byte	0x4
+ 206 00b5 07       		.byte	0x7
+ 207 00b6 E1010000 		.4byte	.LASF17
+ 208 00ba 05       		.uleb128 0x5
+ 209 00bb 32010000 		.4byte	.LASF28
+ 210 00bf 01       		.byte	0x1
+ 211 00c0 1E       		.byte	0x1e
+ 212 00c1 00000000 		.4byte	.LFB65
+ 213 00c5 1C000000 		.4byte	.LFE65-.LFB65
+ 214 00c9 01       		.uleb128 0x1
+ 215 00ca 9C       		.byte	0x9c
+ 216 00cb 17010000 		.4byte	0x117
+ 217 00cf 06       		.uleb128 0x6
+ 218 00d0 84000000 		.4byte	.LASF18
+ 219 00d4 01       		.byte	0x1
+ 220 00d5 20       		.byte	0x20
+ 221 00d6 81000000 		.4byte	0x81
+ 222 00da 00000000 		.4byte	.LLST0
+ 223 00de 07       		.uleb128 0x7
+ 224 00df 0A000000 		.4byte	.LBB2
+ 225 00e3 0C000000 		.4byte	.LBE2-.LBB2
+ 226 00e7 0D010000 		.4byte	0x10d
+ 227 00eb 06       		.uleb128 0x6
+ 228 00ec 2F020000 		.4byte	.LASF19
+ 229 00f0 01       		.byte	0x1
+ 230 00f1 23       		.byte	0x23
+ 231 00f2 81000000 		.4byte	0x81
+ 232 00f6 1E000000 		.4byte	.LLST1
+ 233 00fa 08       		.uleb128 0x8
+ 234 00fb 0E000000 		.4byte	.LVL2
+ 235 00ff 62010000 		.4byte	0x162
+ 236 0103 08       		.uleb128 0x8
+ 237 0104 12000000 		.4byte	.LVL3
+ 238 0108 6D010000 		.4byte	0x16d
+ 239 010c 00       		.byte	0
+ARM GAS  C:\Users\au485450\AppData\Local\Temp\ccoDUPLy.s 			page 6
+
+
+ 240 010d 08       		.uleb128 0x8
+ 241 010e 06000000 		.4byte	.LVL0
+ 242 0112 78010000 		.4byte	0x178
+ 243 0116 00       		.byte	0
+ 244 0117 09       		.uleb128 0x9
+ 245 0118 91010000 		.4byte	.LASF29
+ 246 011c 01       		.byte	0x1
+ 247 011d 13       		.byte	0x13
+ 248 011e 73000000 		.4byte	0x73
+ 249 0122 00000000 		.4byte	.LFB64
+ 250 0126 14000000 		.4byte	.LFE64-.LFB64
+ 251 012a 01       		.uleb128 0x1
+ 252 012b 9C       		.byte	0x9c
+ 253 012c 51010000 		.4byte	0x151
+ 254 0130 0A       		.uleb128 0xa
+ 255 0131 0A000000 		.4byte	.LVL6
+ 256 0135 83010000 		.4byte	0x183
+ 257 0139 47010000 		.4byte	0x147
+ 258 013d 0B       		.uleb128 0xb
+ 259 013e 01       		.uleb128 0x1
+ 260 013f 50       		.byte	0x50
+ 261 0140 05       		.uleb128 0x5
+ 262 0141 03       		.byte	0x3
+ 263 0142 00000000 		.4byte	ISR_UART_rx_handler
+ 264 0146 00       		.byte	0
+ 265 0147 08       		.uleb128 0x8
+ 266 0148 0E000000 		.4byte	.LVL7
+ 267 014c 8E010000 		.4byte	0x18e
+ 268 0150 00       		.byte	0
+ 269 0151 0C       		.uleb128 0xc
+ 270 0152 7D010000 		.4byte	.LASF30
+ 271 0156 07       		.byte	0x7
+ 272 0157 9606     		.2byte	0x696
+ 273 0159 5D010000 		.4byte	0x15d
+ 274 015d 0D       		.uleb128 0xd
+ 275 015e 8C000000 		.4byte	0x8c
+ 276 0162 0E       		.uleb128 0xe
+ 277 0163 58010000 		.4byte	.LASF20
+ 278 0167 58010000 		.4byte	.LASF20
+ 279 016b 04       		.byte	0x4
+ 280 016c 6F       		.byte	0x6f
+ 281 016d 0E       		.uleb128 0xe
+ 282 016e 6A010000 		.4byte	.LASF21
+ 283 0172 6A010000 		.4byte	.LASF21
+ 284 0176 05       		.byte	0x5
+ 285 0177 13       		.byte	0x13
+ 286 0178 0E       		.uleb128 0xe
+ 287 0179 C2010000 		.4byte	.LASF22
+ 288 017d C2010000 		.4byte	.LASF22
+ 289 0181 04       		.byte	0x4
+ 290 0182 73       		.byte	0x73
+ 291 0183 0E       		.uleb128 0xe
+ 292 0184 00000000 		.4byte	.LASF23
+ 293 0188 00000000 		.4byte	.LASF23
+ 294 018c 06       		.byte	0x6
+ 295 018d 18       		.byte	0x18
+ 296 018e 0E       		.uleb128 0xe
+ARM GAS  C:\Users\au485450\AppData\Local\Temp\ccoDUPLy.s 			page 7
+
+
+ 297 018f 7F000000 		.4byte	.LASF24
+ 298 0193 7F000000 		.4byte	.LASF24
+ 299 0197 05       		.byte	0x5
+ 300 0198 14       		.byte	0x14
+ 301 0199 00       		.byte	0
+ 302              		.section	.debug_abbrev,"",%progbits
+ 303              	.Ldebug_abbrev0:
+ 304 0000 01       		.uleb128 0x1
+ 305 0001 11       		.uleb128 0x11
+ 306 0002 01       		.byte	0x1
+ 307 0003 25       		.uleb128 0x25
+ 308 0004 0E       		.uleb128 0xe
+ 309 0005 13       		.uleb128 0x13
+ 310 0006 0B       		.uleb128 0xb
+ 311 0007 03       		.uleb128 0x3
+ 312 0008 0E       		.uleb128 0xe
+ 313 0009 1B       		.uleb128 0x1b
+ 314 000a 0E       		.uleb128 0xe
+ 315 000b 55       		.uleb128 0x55
+ 316 000c 17       		.uleb128 0x17
+ 317 000d 11       		.uleb128 0x11
+ 318 000e 01       		.uleb128 0x1
+ 319 000f 10       		.uleb128 0x10
+ 320 0010 17       		.uleb128 0x17
+ 321 0011 00       		.byte	0
+ 322 0012 00       		.byte	0
+ 323 0013 02       		.uleb128 0x2
+ 324 0014 24       		.uleb128 0x24
+ 325 0015 00       		.byte	0
+ 326 0016 0B       		.uleb128 0xb
+ 327 0017 0B       		.uleb128 0xb
+ 328 0018 3E       		.uleb128 0x3e
+ 329 0019 0B       		.uleb128 0xb
+ 330 001a 03       		.uleb128 0x3
+ 331 001b 0E       		.uleb128 0xe
+ 332 001c 00       		.byte	0
+ 333 001d 00       		.byte	0
+ 334 001e 03       		.uleb128 0x3
+ 335 001f 16       		.uleb128 0x16
+ 336 0020 00       		.byte	0
+ 337 0021 03       		.uleb128 0x3
+ 338 0022 0E       		.uleb128 0xe
+ 339 0023 3A       		.uleb128 0x3a
+ 340 0024 0B       		.uleb128 0xb
+ 341 0025 3B       		.uleb128 0x3b
+ 342 0026 0B       		.uleb128 0xb
+ 343 0027 49       		.uleb128 0x49
+ 344 0028 13       		.uleb128 0x13
+ 345 0029 00       		.byte	0
+ 346 002a 00       		.byte	0
+ 347 002b 04       		.uleb128 0x4
+ 348 002c 24       		.uleb128 0x24
+ 349 002d 00       		.byte	0
+ 350 002e 0B       		.uleb128 0xb
+ 351 002f 0B       		.uleb128 0xb
+ 352 0030 3E       		.uleb128 0x3e
+ 353 0031 0B       		.uleb128 0xb
+ARM GAS  C:\Users\au485450\AppData\Local\Temp\ccoDUPLy.s 			page 8
+
+
+ 354 0032 03       		.uleb128 0x3
+ 355 0033 08       		.uleb128 0x8
+ 356 0034 00       		.byte	0
+ 357 0035 00       		.byte	0
+ 358 0036 05       		.uleb128 0x5
+ 359 0037 2E       		.uleb128 0x2e
+ 360 0038 01       		.byte	0x1
+ 361 0039 3F       		.uleb128 0x3f
+ 362 003a 19       		.uleb128 0x19
+ 363 003b 03       		.uleb128 0x3
+ 364 003c 0E       		.uleb128 0xe
+ 365 003d 3A       		.uleb128 0x3a
+ 366 003e 0B       		.uleb128 0xb
+ 367 003f 3B       		.uleb128 0x3b
+ 368 0040 0B       		.uleb128 0xb
+ 369 0041 27       		.uleb128 0x27
+ 370 0042 19       		.uleb128 0x19
+ 371 0043 11       		.uleb128 0x11
+ 372 0044 01       		.uleb128 0x1
+ 373 0045 12       		.uleb128 0x12
+ 374 0046 06       		.uleb128 0x6
+ 375 0047 40       		.uleb128 0x40
+ 376 0048 18       		.uleb128 0x18
+ 377 0049 9742     		.uleb128 0x2117
+ 378 004b 19       		.uleb128 0x19
+ 379 004c 01       		.uleb128 0x1
+ 380 004d 13       		.uleb128 0x13
+ 381 004e 00       		.byte	0
+ 382 004f 00       		.byte	0
+ 383 0050 06       		.uleb128 0x6
+ 384 0051 34       		.uleb128 0x34
+ 385 0052 00       		.byte	0
+ 386 0053 03       		.uleb128 0x3
+ 387 0054 0E       		.uleb128 0xe
+ 388 0055 3A       		.uleb128 0x3a
+ 389 0056 0B       		.uleb128 0xb
+ 390 0057 3B       		.uleb128 0x3b
+ 391 0058 0B       		.uleb128 0xb
+ 392 0059 49       		.uleb128 0x49
+ 393 005a 13       		.uleb128 0x13
+ 394 005b 02       		.uleb128 0x2
+ 395 005c 17       		.uleb128 0x17
+ 396 005d 00       		.byte	0
+ 397 005e 00       		.byte	0
+ 398 005f 07       		.uleb128 0x7
+ 399 0060 0B       		.uleb128 0xb
+ 400 0061 01       		.byte	0x1
+ 401 0062 11       		.uleb128 0x11
+ 402 0063 01       		.uleb128 0x1
+ 403 0064 12       		.uleb128 0x12
+ 404 0065 06       		.uleb128 0x6
+ 405 0066 01       		.uleb128 0x1
+ 406 0067 13       		.uleb128 0x13
+ 407 0068 00       		.byte	0
+ 408 0069 00       		.byte	0
+ 409 006a 08       		.uleb128 0x8
+ 410 006b 898201   		.uleb128 0x4109
+ARM GAS  C:\Users\au485450\AppData\Local\Temp\ccoDUPLy.s 			page 9
+
+
+ 411 006e 00       		.byte	0
+ 412 006f 11       		.uleb128 0x11
+ 413 0070 01       		.uleb128 0x1
+ 414 0071 31       		.uleb128 0x31
+ 415 0072 13       		.uleb128 0x13
+ 416 0073 00       		.byte	0
+ 417 0074 00       		.byte	0
+ 418 0075 09       		.uleb128 0x9
+ 419 0076 2E       		.uleb128 0x2e
+ 420 0077 01       		.byte	0x1
+ 421 0078 3F       		.uleb128 0x3f
+ 422 0079 19       		.uleb128 0x19
+ 423 007a 03       		.uleb128 0x3
+ 424 007b 0E       		.uleb128 0xe
+ 425 007c 3A       		.uleb128 0x3a
+ 426 007d 0B       		.uleb128 0xb
+ 427 007e 3B       		.uleb128 0x3b
+ 428 007f 0B       		.uleb128 0xb
+ 429 0080 27       		.uleb128 0x27
+ 430 0081 19       		.uleb128 0x19
+ 431 0082 49       		.uleb128 0x49
+ 432 0083 13       		.uleb128 0x13
+ 433 0084 8701     		.uleb128 0x87
+ 434 0086 19       		.uleb128 0x19
+ 435 0087 11       		.uleb128 0x11
+ 436 0088 01       		.uleb128 0x1
+ 437 0089 12       		.uleb128 0x12
+ 438 008a 06       		.uleb128 0x6
+ 439 008b 40       		.uleb128 0x40
+ 440 008c 18       		.uleb128 0x18
+ 441 008d 9742     		.uleb128 0x2117
+ 442 008f 19       		.uleb128 0x19
+ 443 0090 01       		.uleb128 0x1
+ 444 0091 13       		.uleb128 0x13
+ 445 0092 00       		.byte	0
+ 446 0093 00       		.byte	0
+ 447 0094 0A       		.uleb128 0xa
+ 448 0095 898201   		.uleb128 0x4109
+ 449 0098 01       		.byte	0x1
+ 450 0099 11       		.uleb128 0x11
+ 451 009a 01       		.uleb128 0x1
+ 452 009b 31       		.uleb128 0x31
+ 453 009c 13       		.uleb128 0x13
+ 454 009d 01       		.uleb128 0x1
+ 455 009e 13       		.uleb128 0x13
+ 456 009f 00       		.byte	0
+ 457 00a0 00       		.byte	0
+ 458 00a1 0B       		.uleb128 0xb
+ 459 00a2 8A8201   		.uleb128 0x410a
+ 460 00a5 00       		.byte	0
+ 461 00a6 02       		.uleb128 0x2
+ 462 00a7 18       		.uleb128 0x18
+ 463 00a8 9142     		.uleb128 0x2111
+ 464 00aa 18       		.uleb128 0x18
+ 465 00ab 00       		.byte	0
+ 466 00ac 00       		.byte	0
+ 467 00ad 0C       		.uleb128 0xc
+ARM GAS  C:\Users\au485450\AppData\Local\Temp\ccoDUPLy.s 			page 10
+
+
+ 468 00ae 34       		.uleb128 0x34
+ 469 00af 00       		.byte	0
+ 470 00b0 03       		.uleb128 0x3
+ 471 00b1 0E       		.uleb128 0xe
+ 472 00b2 3A       		.uleb128 0x3a
+ 473 00b3 0B       		.uleb128 0xb
+ 474 00b4 3B       		.uleb128 0x3b
+ 475 00b5 05       		.uleb128 0x5
+ 476 00b6 49       		.uleb128 0x49
+ 477 00b7 13       		.uleb128 0x13
+ 478 00b8 3F       		.uleb128 0x3f
+ 479 00b9 19       		.uleb128 0x19
+ 480 00ba 3C       		.uleb128 0x3c
+ 481 00bb 19       		.uleb128 0x19
+ 482 00bc 00       		.byte	0
+ 483 00bd 00       		.byte	0
+ 484 00be 0D       		.uleb128 0xd
+ 485 00bf 35       		.uleb128 0x35
+ 486 00c0 00       		.byte	0
+ 487 00c1 49       		.uleb128 0x49
+ 488 00c2 13       		.uleb128 0x13
+ 489 00c3 00       		.byte	0
+ 490 00c4 00       		.byte	0
+ 491 00c5 0E       		.uleb128 0xe
+ 492 00c6 2E       		.uleb128 0x2e
+ 493 00c7 00       		.byte	0
+ 494 00c8 3F       		.uleb128 0x3f
+ 495 00c9 19       		.uleb128 0x19
+ 496 00ca 3C       		.uleb128 0x3c
+ 497 00cb 19       		.uleb128 0x19
+ 498 00cc 6E       		.uleb128 0x6e
+ 499 00cd 0E       		.uleb128 0xe
+ 500 00ce 03       		.uleb128 0x3
+ 501 00cf 0E       		.uleb128 0xe
+ 502 00d0 3A       		.uleb128 0x3a
+ 503 00d1 0B       		.uleb128 0xb
+ 504 00d2 3B       		.uleb128 0x3b
+ 505 00d3 0B       		.uleb128 0xb
+ 506 00d4 00       		.byte	0
+ 507 00d5 00       		.byte	0
+ 508 00d6 00       		.byte	0
+ 509              		.section	.debug_loc,"",%progbits
+ 510              	.Ldebug_loc0:
+ 511              	.LLST0:
+ 512 0000 08000000 		.4byte	.LVL1
+ 513 0004 14000000 		.4byte	.LVL4
+ 514 0008 0100     		.2byte	0x1
+ 515 000a 54       		.byte	0x54
+ 516 000b 16000000 		.4byte	.LVL5
+ 517 000f 1C000000 		.4byte	.LFE65
+ 518 0013 0100     		.2byte	0x1
+ 519 0015 54       		.byte	0x54
+ 520 0016 00000000 		.4byte	0
+ 521 001a 00000000 		.4byte	0
+ 522              	.LLST1:
+ 523 001e 0E000000 		.4byte	.LVL2
+ 524 0022 11000000 		.4byte	.LVL3-1
+ARM GAS  C:\Users\au485450\AppData\Local\Temp\ccoDUPLy.s 			page 11
+
+
+ 525 0026 0100     		.2byte	0x1
+ 526 0028 50       		.byte	0x50
+ 527 0029 00000000 		.4byte	0
+ 528 002d 00000000 		.4byte	0
+ 529              		.section	.debug_aranges,"",%progbits
+ 530 0000 24000000 		.4byte	0x24
+ 531 0004 0200     		.2byte	0x2
+ 532 0006 00000000 		.4byte	.Ldebug_info0
+ 533 000a 04       		.byte	0x4
+ 534 000b 00       		.byte	0
+ 535 000c 0000     		.2byte	0
+ 536 000e 0000     		.2byte	0
+ 537 0010 00000000 		.4byte	.LFB65
+ 538 0014 1C000000 		.4byte	.LFE65-.LFB65
+ 539 0018 00000000 		.4byte	.LFB64
+ 540 001c 14000000 		.4byte	.LFE64-.LFB64
+ 541 0020 00000000 		.4byte	0
+ 542 0024 00000000 		.4byte	0
+ 543              		.section	.debug_ranges,"",%progbits
+ 544              	.Ldebug_ranges0:
+ 545 0000 00000000 		.4byte	.LFB65
+ 546 0004 1C000000 		.4byte	.LFE65
+ 547 0008 00000000 		.4byte	.LFB64
+ 548 000c 14000000 		.4byte	.LFE64
+ 549 0010 00000000 		.4byte	0
+ 550 0014 00000000 		.4byte	0
+ 551              		.section	.debug_line,"",%progbits
+ 552              	.Ldebug_line0:
+ 553 0000 96010000 		.section	.debug_str,"MS",%progbits,1
+ 553      02006601 
+ 553      00000201 
+ 553      FB0E0D00 
+ 553      01010101 
+ 554              	.LASF23:
+ 555 0000 6973725F 		.ascii	"isr_uart_rx_StartEx\000"
+ 555      75617274 
+ 555      5F72785F 
+ 555      53746172 
+ 555      74457800 
+ 556              	.LASF4:
+ 557 0014 5F5F7569 		.ascii	"__uint8_t\000"
+ 557      6E74385F 
+ 557      7400
+ 558              	.LASF5:
+ 559 001e 5F5F696E 		.ascii	"__int32_t\000"
+ 559      7433325F 
+ 559      7400
+ 560              	.LASF3:
+ 561 0028 73686F72 		.ascii	"short unsigned int\000"
+ 561      7420756E 
+ 561      7369676E 
+ 561      65642069 
+ 561      6E7400
+ 562              	.LASF27:
+ 563 003b 433A5C55 		.ascii	"C:\\Users\\au485450\\Uni_code\\2_semester\\New fold"
+ 563      73657273 
+ 563      5C617534 
+ARM GAS  C:\Users\au485450\AppData\Local\Temp\ccoDUPLy.s 			page 12
+
+
+ 563      38353435 
+ 563      305C556E 
+ 564 0069 65725C44 		.ascii	"er\\DC-Motor-PWM.cydsn\000"
+ 564      432D4D6F 
+ 564      746F722D 
+ 564      50574D2E 
+ 564      63796473 
+ 565              	.LASF24:
+ 566 007f 696E6974 		.ascii	"init\000"
+ 566      00
+ 567              	.LASF18:
+ 568 0084 62797465 		.ascii	"bytesToRead\000"
+ 568      73546F52 
+ 568      65616400 
+ 569              	.LASF13:
+ 570 0090 666C6F61 		.ascii	"float\000"
+ 570      7400
+ 571              	.LASF1:
+ 572 0096 756E7369 		.ascii	"unsigned char\000"
+ 572      676E6564 
+ 572      20636861 
+ 572      7200
+ 573              	.LASF25:
+ 574 00a4 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 574      43313120 
+ 574      352E342E 
+ 574      31203230 
+ 574      31363036 
+ 575 00d7 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 575      20726576 
+ 575      6973696F 
+ 575      6E203233 
+ 575      37373135 
+ 576 010a 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 576      66756E63 
+ 576      74696F6E 
+ 576      2D736563 
+ 576      74696F6E 
+ 577              	.LASF28:
+ 578 0132 4953525F 		.ascii	"ISR_UART_rx_handler\000"
+ 578      55415254 
+ 578      5F72785F 
+ 578      68616E64 
+ 578      6C657200 
+ 579              	.LASF7:
+ 580 0146 6C6F6E67 		.ascii	"long unsigned int\000"
+ 580      20756E73 
+ 580      69676E65 
+ 580      6420696E 
+ 580      7400
+ 581              	.LASF20:
+ 582 0158 55415254 		.ascii	"UART_1_ReadRxData\000"
+ 582      5F315F52 
+ 582      65616452 
+ 582      78446174 
+ 582      6100
+ 583              	.LASF21:
+ARM GAS  C:\Users\au485450\AppData\Local\Temp\ccoDUPLy.s 			page 13
+
+
+ 584 016a 68616E64 		.ascii	"handleByteReceived\000"
+ 584      6C654279 
+ 584      74655265 
+ 584      63656976 
+ 584      656400
+ 585              	.LASF30:
+ 586 017d 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 586      52784275 
+ 586      66666572 
+ 586      00
+ 587              	.LASF14:
+ 588 018a 646F7562 		.ascii	"double\000"
+ 588      6C6500
+ 589              	.LASF29:
+ 590 0191 6D61696E 		.ascii	"main\000"
+ 590      00
+ 591              	.LASF10:
+ 592 0196 756E7369 		.ascii	"unsigned int\000"
+ 592      676E6564 
+ 592      20696E74 
+ 592      00
+ 593              	.LASF9:
+ 594 01a3 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 594      206C6F6E 
+ 594      6720756E 
+ 594      7369676E 
+ 594      65642069 
+ 595              	.LASF11:
+ 596 01ba 75696E74 		.ascii	"uint8_t\000"
+ 596      385F7400 
+ 597              	.LASF22:
+ 598 01c2 55415254 		.ascii	"UART_1_GetRxBufferSize\000"
+ 598      5F315F47 
+ 598      65745278 
+ 598      42756666 
+ 598      65725369 
+ 599              	.LASF12:
+ 600 01d9 696E7433 		.ascii	"int32_t\000"
+ 600      325F7400 
+ 601              	.LASF17:
+ 602 01e1 73697A65 		.ascii	"sizetype\000"
+ 602      74797065 
+ 602      00
+ 603              	.LASF8:
+ 604 01ea 6C6F6E67 		.ascii	"long long int\000"
+ 604      206C6F6E 
+ 604      6720696E 
+ 604      7400
+ 605              	.LASF26:
+ 606 01f8 6D61696E 		.ascii	"main.c\000"
+ 606      2E6300
+ 607              	.LASF15:
+ 608 01ff 63686172 		.ascii	"char\000"
+ 608      00
+ 609              	.LASF2:
+ 610 0204 73686F72 		.ascii	"short int\000"
+ 610      7420696E 
+ARM GAS  C:\Users\au485450\AppData\Local\Temp\ccoDUPLy.s 			page 14
+
+
+ 610      7400
+ 611              	.LASF6:
+ 612 020e 6C6F6E67 		.ascii	"long int\000"
+ 612      20696E74 
+ 612      00
+ 613              	.LASF16:
+ 614 0217 6C6F6E67 		.ascii	"long double\000"
+ 614      20646F75 
+ 614      626C6500 
+ 615              	.LASF0:
+ 616 0223 7369676E 		.ascii	"signed char\000"
+ 616      65642063 
+ 616      68617200 
+ 617              	.LASF19:
+ 618 022f 62797465 		.ascii	"byteReceived\000"
+ 618      52656365 
+ 618      69766564 
+ 618      00
+ 619              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
